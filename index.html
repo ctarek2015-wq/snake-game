@@ -8,9 +8,10 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <header class="banner"></header>
+    <header class="banner"><p>sfbs</p></header>
     <div class="game-board">
       <section class="controls">
+        <h1>CONTROL PANEL</h1>
         <fieldset class="speed">
           <legend>SPEED</legend>
           <input type="radio" name="speed" id="slow" value="slow" checked />
@@ -117,19 +118,19 @@
         </div>
       </section>
       <section class="game">
-        <div class="game">
+        <div class="grids">
           <div class="easy-grid"></div>
           <div class="medium-grid"></div>
           <div class="hard-grid"></div>
           <div class="easy-grid"></div>
         </div>
         <div class="win-block">
-          <h2 class="win-msg"></h2>
-          <button class="restart" id="restart"></button>
+          <h2 class="win-msg">Congratulations</h2>
+          <button class="restart" id="restart">Play Again</button>
         </div>
         <div class="lose-block">
-          <h2 class="lose-msg"></h2>
-          <button class="restart" id="restart"></button>
+          <h2 class="lose-msg">Hard Luck</h2>
+          <button class="restart" id="restart">Play Again</button>
         </div>
       </section>
     </div>
