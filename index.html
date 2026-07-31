@@ -7,5 +7,116 @@
     <script defer src="app.js"></script>
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body></body>
+  <body>
+    <header class="banner"></header>
+    <div class="game-board">
+      <section class="controls">
+        <div class="speed">
+          <h2></h2>
+          <input type="radio" name="Slow" id="slow" />
+          <input type="radio" name="Med" id="med" />
+          <input type="radio" name="Fast" id="fast" />
+        </div>
+        <div class="difficulty">
+          <h2></h2>
+          <input type="radio" name="Easy" id="easy" />
+          <input type="radio" name="Medium" id="medium" />
+          <input type="radio" name="Hard" id="hard" />
+        </div>
+        <div class="sound">
+          <input type="checkbox" name="Mute-SFX" id="mute-sfx" />
+          <input type="checkbox" name="Mute-Music" id="mute-music" />
+        </div>
+        <div class="buttons">
+          <button class="restart"></button>
+          <button class="pause"></button>
+        </div>
+        <div class="leaderboard easy">
+          <h3 class="easy">EASY</h3>
+          <div class="row 1">
+            <p class="rank"></p>
+            <p class="time"></p>
+          </div>
+          <div class="row 2">
+            <p class="rank"></p>
+            <p class="time"></p>
+          </div>
+          <div class="row 3">
+            <p class="rank"></p>
+            <p class="time"></p>
+          </div>
+          <div class="row 4">
+            <p class="rank"></p>
+            <p class="time"></p>
+          </div>
+          <div class="row 5">
+            <p class="rank"></p>
+            <p class="time"></p>
+          </div>
+        </div>
+        <div class="leaderboard medium">
+          <h3 class="easy">MEDIUM</h3>
+          <div class="row 1">
+            <p class="rank"></p>
+            <p class="time"></p>
+          </div>
+          <div class="row 2">
+            <p class="rank"></p>
+            <p class="time"></p>
+          </div>
+          <div class="row 3">
+            <p class="rank"></p>
+            <p class="time"></p>
+          </div>
+          <div class="row 4">
+            <p class="rank"></p>
+            <p class="time"></p>
+          </div>
+          <div class="row 5">
+            <p class="rank"></p>
+            <p class="time"></p>
+          </div>
+        </div>
+        <div class="leaderboard hard">
+          <h3 class="easy">HARD</h3>
+          <div class="row 1">
+            <p class="rank"></p>
+            <p class="time"></p>
+          </div>
+          <div class="row 2">
+            <p class="rank"></p>
+            <p class="time"></p>
+          </div>
+          <div class="row 3">
+            <p class="rank"></p>
+            <p class="time"></p>
+          </div>
+          <div class="row 4">
+            <p class="rank"></p>
+            <p class="time"></p>
+          </div>
+          <div class="row 5">
+            <p class="rank"></p>
+            <p class="time"></p>
+          </div>
+        </div>
+      </section>
+      <section class="game">
+        <div class="game">
+          <div class="easy-grid"></div>
+          <div class="medium-grid"></div>
+          <div class="hard-grid"></div>
+          <div class="easy-grid"></div>
+        </div>
+        <div class="win-block">
+          <h2 class="win-msg"></h2>
+          <button class="restart" id="restart"></button>
+        </div>
+        <div class="lose-block">
+          <h2 class="lose-msg"></h2>
+          <button class="restart" id="restart"></button>
+        </div>
+      </section>
+    </div>
+  </body>
 </html>
