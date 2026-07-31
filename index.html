@@ -11,25 +11,40 @@
     <header class="banner"></header>
     <div class="game-board">
       <section class="controls">
-        <div class="speed">
-          <h2></h2>
-          <input type="radio" name="Slow" id="slow" />
-          <input type="radio" name="Med" id="med" />
-          <input type="radio" name="Fast" id="fast" />
-        </div>
-        <div class="difficulty">
-          <h2></h2>
-          <input type="radio" name="Easy" id="easy" />
-          <input type="radio" name="Medium" id="medium" />
-          <input type="radio" name="Hard" id="hard" />
-        </div>
-        <div class="sound">
-          <input type="checkbox" name="Mute-SFX" id="mute-sfx" />
-          <input type="checkbox" name="Mute-Music" id="mute-music" />
-        </div>
+        <fieldset class="speed">
+          <legend>SPEED</legend>
+          <input type="radio" name="speed" id="slow" value="slow" checked />
+          <label for="slow">Slow</label>
+          <input type="radio" name="speed" id="med" value="med" />
+          <label for="med">Med</label>
+          <input type="radio" name="speed" id="fast" value="fast" />
+          <label for="fast">Fast</label>
+        </fieldset>
+        <fieldset class="difficulty">
+          <legend>DIFFICULTY</legend>
+          <input
+            type="radio"
+            name="difficulty"
+            id="easy"
+            value="easy"
+            checked
+          />
+          <label for="easy">Easy</label>
+          <input type="radio" name="difficulty" id="medium" value="medium" />
+          <label for="medium">Medium</label>
+          <input type="radio" name="difficulty" id="hard" value="difficult" />
+          <label for="difficult">Difficult</label>
+        </fieldset>
+        <fieldset class="sound">
+          <legend>SOUND</legend>
+          <input type="checkbox" name="sound" id="mute-sfx" value="sfx" />
+          <label for="sfx">Mute SFX</label>
+          <input type="checkbox" name="sound" id="mute-music" value="music" />
+          <label for="music">Mute Music</label>
+        </fieldset>
         <div class="buttons">
-          <button class="restart"></button>
-          <button class="pause"></button>
+          <button class="restart">Restart</button>
+          <button class="pause">Pause</button>
         </div>
         <div class="leaderboard easy">
           <h3 class="easy">EASY</h3>
