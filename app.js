@@ -14,7 +14,6 @@ const easyBoxes = {
 
 ////////////////////////////////_____Variables(State)_________////////////////////////
 
-let randomBox = { letter: [], number: [] };
 let snakeBox = { letter: [], number: [] };
 let appleBox = { letter: [], number: [] };
 
@@ -43,6 +42,7 @@ const snakePlace = () => {
       box.classList.contains(snakeBox.number)
     ) {
       box.style.backgroundColor = "green";
+      box.style.borderRadius = "15%";
     }
   });
 };
