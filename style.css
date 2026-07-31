@@ -9,39 +9,66 @@ body {
 }
 h1 {
   font-size: 2rem;
+  text-align: center;
 }
 legend {
   font-size: 1.25rem;
 }
 button {
-  font-size: 2rem;
+  font-size: 1.5rem;
+  margin: 2px;
+  width: 100px;
 }
 header {
   height: 10vh;
-  width: 100vw;
+  width: 98vw;
 }
 .game-board {
   display: flex;
+  justify-content: space-between;
 }
 
 /* ////////////////////////_____CONTROL_PANEL____/////////////////////// */
 
 .controls {
-  width: 30vw;
-  height: 90vh;
+  width: 28vw;
+  height: 88vh;
+  min-width: 175px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  border: solid 2px black;
 }
 .buttons {
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
 }
 
 /* ////////////////////////________GAME_________/////////////////////// */
 
 .game {
-  width: 70vw;
-  height: 90vh;
+  width: 68vw;
+  height: 88vh;
+  min-width: 400px;
+  border: solid 2px black;
   display: flex;
+}
+
+/* /////////////////////////////////______GRIDS_______///////////////////////////// */
+.grids {
+  width: 90%;
+  min-width: 400px;
+  aspect-ratio: 1/1;
+  margin: auto;
+  position: relative;
+  background-color: aqua;
+}
+
+/* ////////////////////////_____MSGs______//////////////////////// */
+.win-block {
+  display: none;
+}
+.lose-block {
+  display: none;
 }

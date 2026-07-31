@@ -14,8 +14,6 @@
 - the initial _grid_ is `5 * 5` boxes.
 - the snake can move up or down, right or left in the grid as long as it's not the opposite direction of the current one.
 - the snake _grows_ by 1 box if he eats an apple.
-- a _score board_ for the current game.
-- _leaderboard_ for scores.
 - there will be controls for:
   - _speed_: `slow` `med` `fast`.
   - _difficulty_:
@@ -95,7 +93,6 @@
 
 > ### Variables(State):
 
-- score
 - leaderBoard
 - timeInterval
 
