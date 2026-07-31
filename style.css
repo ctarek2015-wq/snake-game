@@ -74,14 +74,14 @@ img {
   max-width: 750px;
   aspect-ratio: 1/1;
   margin: auto;
-  /* background-color: aqua; */
+  background-color: rgb(0, 0, 0);
 }
 /* ////////////////////////////////_____EASY_____/////////////////////////// */
 .box {
-  width: 2vw;
+  width: 90%;
   aspect-ratio: 1/1;
   margin: 1px;
-  background-color: blue;
+  background-color: rgb(144, 250, 130);
 }
 div .a {
   display: flex;
@@ -100,14 +100,17 @@ div .e {
 }
 /* ////////////////////////_____MSGs______//////////////////////// */
 .state-block {
-  width: 100%;
+  width: 80%;
   min-width: 400px;
   max-width: 750px;
   aspect-ratio: 1/1;
   background-color: rgba(100, 100, 100, 0.8);
   position: absolute;
-  align-self: center;
-  justify-self: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
