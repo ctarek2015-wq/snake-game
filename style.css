@@ -1,11 +1,13 @@
 * {
   font-size: 16px;
 }
+/* /////////////////////////////____TAGS____///////////////////////// */
 body {
   height: 100vh;
   width: 100vw;
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
 }
 h1 {
   font-size: 2rem;
@@ -21,7 +23,15 @@ button {
 }
 header {
   height: 10vh;
-  width: 98vw;
+  width: 96vw;
+  margin-bottom: 2px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: start;
+}
+img {
+  position: relative;
+  max-width: 220px;
 }
 .game-board {
   display: flex;
@@ -38,6 +48,7 @@ header {
   flex-direction: column;
   justify-content: space-around;
   border: solid 2px black;
+  contain: content;
 }
 .buttons {
   display: flex;
@@ -53,22 +64,65 @@ header {
   min-width: 400px;
   border: solid 2px black;
   display: flex;
+  contain: content;
 }
 
 /* /////////////////////////////////______GRIDS_______///////////////////////////// */
 .grids {
-  width: 90%;
+  width: 80%;
   min-width: 400px;
+  max-width: 750px;
   aspect-ratio: 1/1;
   margin: auto;
-  position: relative;
-  background-color: aqua;
+  /* background-color: aqua; */
 }
-
+/* ////////////////////////////////_____EASY_____/////////////////////////// */
+.box {
+  width: 2vw;
+  aspect-ratio: 1/1;
+  margin: 1px;
+  background-color: blue;
+}
+div .a {
+  display: flex;
+}
+div .b {
+  display: flex;
+}
+div .c {
+  display: flex;
+}
+div .d {
+  display: flex;
+}
+div .e {
+  display: flex;
+}
 /* ////////////////////////_____MSGs______//////////////////////// */
-.win-block {
+.state-block {
+  width: 100%;
+  min-width: 400px;
+  max-width: 750px;
+  aspect-ratio: 1/1;
+  background-color: rgba(100, 100, 100, 0.8);
+  position: absolute;
+  align-self: center;
+  justify-self: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+h2 {
+  font-size: 4rem;
+}
+#restart {
+  width: 200px;
+  height: 50px;
+}
+.win {
   display: none;
 }
-.lose-block {
+.lose {
   display: none;
 }

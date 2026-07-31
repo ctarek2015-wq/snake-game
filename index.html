@@ -3,12 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/assets/pic/snake-pics/favicon.png" />
     <title>NOT UR REGULAR SNAKE</title>
     <script defer src="app.js"></script>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <header class="banner"><p>sfbs</p></header>
+    <header class="banner">
+      <img src="./assets/pic/snake-pics/banner.jpg" alt="snake-banner" />
+      <h1>Snake Game</h1>
+      <img src="./assets/pic/snake-pics/banner.jpg" alt="snake-banner" />
+    </header>
     <div class="game-board">
       <section class="controls">
         <h1>CONTROL PANEL</h1>
@@ -52,50 +57,50 @@
         <div class="grids">
           <div class="easy-grid">
             <div class="e">
-              <div class="5"></div>
-              <div class="4"></div>
-              <div class="3"></div>
-              <div class="2"></div>
-              <div class="1"></div>
+              <div class="5 box"></div>
+              <div class="4 box"></div>
+              <div class="3 box"></div>
+              <div class="2 box"></div>
+              <div class="1 box"></div>
             </div>
             <div class="d">
-              <div class="5"></div>
-              <div class="4"></div>
-              <div class="3"></div>
-              <div class="2"></div>
-              <div class="1"></div>
+              <div class="5 box"></div>
+              <div class="4 box"></div>
+              <div class="3 box"></div>
+              <div class="2 box"></div>
+              <div class="1 box"></div>
             </div>
             <div class="c">
-              <div class="5"></div>
-              <div class="4"></div>
-              <div class="3"></div>
-              <div class="2"></div>
-              <div class="1"></div>
+              <div class="5 box"></div>
+              <div class="4 box"></div>
+              <div class="3 box"></div>
+              <div class="2 box"></div>
+              <div class="1 box"></div>
             </div>
             <div class="b">
-              <div class="5"></div>
-              <div class="4"></div>
-              <div class="3"></div>
-              <div class="2"></div>
-              <div class="1"></div>
+              <div class="5 box"></div>
+              <div class="4 box"></div>
+              <div class="3 box"></div>
+              <div class="2 box"></div>
+              <div class="1 box"></div>
             </div>
             <div class="a">
-              <div class="5"></div>
-              <div class="4"></div>
-              <div class="3"></div>
-              <div class="2"></div>
-              <div class="1"></div>
+              <div class="5 box"></div>
+              <div class="4 box"></div>
+              <div class="3 box"></div>
+              <div class="2 box"></div>
+              <div class="1 box"></div>
             </div>
           </div>
           <div class="medium-grid"></div>
           <div class="hard-grid"></div>
           <div class="easy-grid"></div>
         </div>
-        <div class="win-block">
+        <div class="state-block win">
           <h2 class="win-msg">Congratulations</h2>
           <button class="restart" id="restart">Play Again</button>
         </div>
-        <div class="lose-block">
+        <div class="state-block lose">
           <h2 class="lose-msg">Hard Luck</h2>
           <button class="restart" id="restart">Play Again</button>
         </div>
