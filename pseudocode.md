@@ -78,7 +78,7 @@
 
 - gameOverState: `false`
 - movementControls: w a s d ArrowUp ArrowLeft ArrowRight ArrowDown
-- speed: slow med fast
+- timeIntervalSpeed: slow med fast
 - difficulty: easy medium hard
 
 > ### Audio:
@@ -94,7 +94,6 @@
 > ### Variables(State):
 
 - leaderBoard
-- timeInterval
 
 > ### Cached Element References:
 
@@ -121,6 +120,8 @@
   - rightMove
   - downMove
   - leftMove
+- snakeInitPlace
+- applePlace
 - speed:
   - setinterval for directionMovement
 - difficulty:
