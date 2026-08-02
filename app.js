@@ -1,7 +1,8 @@
 ////////////////////////////////_____Constants_____////////////////////////
 
 const gameOverState = false;
-const movementCtrls = ["w", "a", "s", "d"];
+const xAxis = ["ArrowLeft", "a", "ArrowRight", "d"];
+const yAxis = ["ArrowUp", "w", "ArrowDown", "s"];
 const timeIntervalSpeed = { slow: 2000, med: 1000, fast: 500 };
 const easyBoxes = {
   letters: ["a", "b", "c", "d", "e"],
@@ -16,7 +17,7 @@ const easyBoxes = {
 
 let snakeBox = { letter: [], number: [] };
 let appleBox = { letter: [], number: [] };
-let lastKeyStroke = "";
+let lastKeyStroke;
 let lastSnakeBox = { letter: [], number: [] };
 
 ////////////////////////////////_____Cached_Element_References___////////////////////////
@@ -61,46 +62,143 @@ const applePlace = () => {
     }
   });
 };
-const snakeMove = (event) => {
-  lastKeyStroke = event.key;
-  console.log(lastKeyStroke);
-  if (lastKeyStroke === "s" || lastKeyStroke === "ArrowDown") {
-    const downBoxes = easyBoxes.letters;
-    console.log(downBoxes);
-    const snakeMove = setInterval(() => {
-      easyGrid.forEach((box) => {
-        if (
-          box.classList.contains(snakeBox.letter) &&
-          box.classList.contains(snakeBox.number)
-        ) {
-          box.style.backgroundColor = "rgb(144, 250, 130)";
-          box.style.borderRadius = "0%";
-        }
-      });
-      let idx = {
-        letterValue: snakeBox.letter,
-        letterIdx: downBoxes.findIndex((el) => el === snakeBox.letter),
-        number: snakeBox.number,
-      };
-      snakeBox = {
-        letter: downBoxes.at(idx.letterIdx + 1),
-        number: idx.number,
-      };
-      easyGrid.forEach((box) => {
-        if (
-          box.classList.contains(snakeBox.letter) &&
-          box.classList.contains(snakeBox.number)
-        ) {
-          box.style.backgroundColor = "green";
-          box.style.borderRadius = "15%";
-        }
-      });
-    }, 1000);
-    console.log("hi");
+let moveSwitch;
 
-    console.log(snakeBox);
-    console.log(easyBoxes.letters.reverse());
+const snakeMove = (event) => {
+  console.log(lastKeyStroke);
+  if (event.key !== lastKeyStroke) {
+    clearInterval(moveSwitch);
+    if (event.key === "s" || event.key === "ArrowDown") {
+      moveSwitch = setInterval(() => {
+        const downBoxes = easyBoxes.letters;
+        easyGrid.forEach((box) => {
+          if (
+            box.classList.contains(snakeBox.letter) &&
+            box.classList.contains(snakeBox.number)
+          ) {
+            box.style.backgroundColor = "rgb(144, 250, 130)";
+            box.style.borderRadius = "0%";
+          }
+        });
+        let idx = {
+          letterValue: snakeBox.letter,
+          letterIdx: downBoxes.findIndex((el) => el === snakeBox.letter),
+          number: snakeBox.number,
+        };
+        snakeBox = {
+          letter: downBoxes.at(idx.letterIdx - 1),
+          number: idx.number,
+        };
+        easyGrid.forEach((box) => {
+          if (
+            box.classList.contains(snakeBox.letter) &&
+            box.classList.contains(snakeBox.number)
+          ) {
+            box.style.backgroundColor = "green";
+            box.style.borderRadius = "15%";
+          }
+        });
+      }, 500);
+    }
+    if (event.key === "w" || event.key === "ArrowUp") {
+      moveSwitch = setInterval(() => {
+        const upBoxes = easyBoxes.letters;
+        easyGrid.forEach((box) => {
+          if (
+            box.classList.contains(snakeBox.letter) &&
+            box.classList.contains(snakeBox.number)
+          ) {
+            box.style.backgroundColor = "rgb(144, 250, 130)";
+            box.style.borderRadius = "0%";
+          }
+        });
+        let idx = {
+          letterValue: snakeBox.letter,
+          letterIdx: upBoxes.findIndex((el) => el === snakeBox.letter),
+          number: snakeBox.number,
+        };
+        snakeBox = {
+          letter: upBoxes.at(idx.letterIdx + 1),
+          number: idx.number,
+        };
+        easyGrid.forEach((box) => {
+          if (
+            box.classList.contains(snakeBox.letter) &&
+            box.classList.contains(snakeBox.number)
+          ) {
+            box.style.backgroundColor = "green";
+            box.style.borderRadius = "15%";
+          }
+        });
+      }, 500);
+    }
+    if (event.key === "d" || event.key === "ArrowRight") {
+      moveSwitch = setInterval(() => {
+        const rightBoxes = easyBoxes.numbers;
+        easyGrid.forEach((box) => {
+          if (
+            box.classList.contains(snakeBox.letter) &&
+            box.classList.contains(snakeBox.number)
+          ) {
+            box.style.backgroundColor = "rgb(144, 250, 130)";
+            box.style.borderRadius = "0%";
+          }
+        });
+        let idx = {
+          letter: snakeBox.letter,
+          numberIdx: rightBoxes.findIndex((el) => el === snakeBox.number),
+          numberValue: snakeBox.number,
+        };
+        snakeBox = {
+          letter: idx.letter,
+          number: rightBoxes.at(idx.numberIdx + 1),
+        };
+        easyGrid.forEach((box) => {
+          if (
+            box.classList.contains(snakeBox.letter) &&
+            box.classList.contains(snakeBox.number)
+          ) {
+            box.style.backgroundColor = "green";
+            box.style.borderRadius = "15%";
+          }
+        });
+      }, 500);
+    }
+    if (event.key === "a" || event.key === "ArrowLeft") {
+      moveSwitch = setInterval(() => {
+        const leftBoxes = easyBoxes.numbers;
+        easyGrid.forEach((box) => {
+          if (
+            box.classList.contains(snakeBox.letter) &&
+            box.classList.contains(snakeBox.number)
+          ) {
+            box.style.backgroundColor = "rgb(144, 250, 130)";
+            box.style.borderRadius = "0%";
+          }
+        });
+        let idx = {
+          letter: snakeBox.letter,
+          numberIdx: leftBoxes.findIndex((el) => el === snakeBox.number),
+          numberValue: snakeBox.number,
+        };
+        snakeBox = {
+          letter: idx.letter,
+          number: leftBoxes.at(idx.numberIdx - 1),
+        };
+        easyGrid.forEach((box) => {
+          if (
+            box.classList.contains(snakeBox.letter) &&
+            box.classList.contains(snakeBox.number)
+          ) {
+            box.style.backgroundColor = "green";
+            box.style.borderRadius = "15%";
+          }
+        });
+      }, 500);
+    }
+    lastKeyStroke = event.key;
   }
+  console.log(lastKeyStroke);
 };
 const runGame = () => {
   snakePlace();
