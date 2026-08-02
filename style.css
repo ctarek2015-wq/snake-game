@@ -63,6 +63,9 @@ img {
   height: 88vh;
   min-width: 400px;
   border: solid 2px black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* /////////////////////////////////______GRIDS_______///////////////////////////// */
@@ -73,13 +76,22 @@ img {
   aspect-ratio: 1/1;
   margin: auto;
   background-color: rgb(255, 255, 255);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 /* ////////////////////////////////_____EASY_____/////////////////////////// */
 .easy-grid {
   margin: 80px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 #easy-grid {
   background-color: aqua;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 /* ////////////////////////_____MSGs______//////////////////////// */
 .state-block {
