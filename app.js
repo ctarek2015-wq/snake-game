@@ -1,8 +1,10 @@
 ////////////////////////////////_____Constants_____////////////////////////
 
 const gameOverState = false;
-const xAxis = ["ArrowLeft", "a", "ArrowRight", "d"];
-const yAxis = ["ArrowUp", "w", "ArrowDown", "s"];
+const up = ["ArrowUp", "w"];
+const right = ["ArrowRight", "d"];
+const down = ["ArrowDown", "s"];
+const left = ["ArrowLeft", "a"];
 const timeIntervalSpeed = { slow: 2000, med: 1000, fast: 500 };
 const easyBoxes = {
   letters: ["a", "b", "c", "d", "e"],
@@ -17,8 +19,10 @@ const easyBoxes = {
 
 let snakeBox = { letter: [], number: [] };
 let appleBox = { letter: [], number: [] };
-let lastKeyStroke;
+let lastKeyStroke = 0;
 let lastSnakeBox = { letter: [], number: [] };
+let dx;
+let dy;
 
 ////////////////////////////////_____Cached_Element_References___////////////////////////
 
@@ -63,12 +67,16 @@ const applePlace = () => {
   });
 };
 let moveSwitch;
-
+if (!lastKeyStroke) {
+  console.log("true");
+} else {
+  console.log("false");
+}
 const snakeMove = (event) => {
   console.log(lastKeyStroke);
-  if (event.key !== lastKeyStroke) {
-    clearInterval(moveSwitch);
-    if (event.key === "s" || event.key === "ArrowDown") {
+  if (lastKeyStroke !== event.key) {
+    if (down.includes(event.key) && dy !== 1) {
+      clearInterval(moveSwitch);
       moveSwitch = setInterval(() => {
         const downBoxes = easyBoxes.letters;
         easyGrid.forEach((box) => {
@@ -99,8 +107,12 @@ const snakeMove = (event) => {
           }
         });
       }, 500);
+      dx = 0;
+      dy = -1;
+      lastKeyStroke = event.key;
     }
-    if (event.key === "w" || event.key === "ArrowUp") {
+    if (up.includes(event.key) && dy !== -1) {
+      clearInterval(moveSwitch);
       moveSwitch = setInterval(() => {
         const upBoxes = easyBoxes.letters;
         easyGrid.forEach((box) => {
@@ -131,8 +143,12 @@ const snakeMove = (event) => {
           }
         });
       }, 500);
+      dx = 0;
+      dy = 1;
+      lastKeyStroke = event.key;
     }
-    if (event.key === "d" || event.key === "ArrowRight") {
+    if (right.includes(event.key) && dx !== -1) {
+      clearInterval(moveSwitch);
       moveSwitch = setInterval(() => {
         const rightBoxes = easyBoxes.numbers;
         easyGrid.forEach((box) => {
@@ -163,8 +179,12 @@ const snakeMove = (event) => {
           }
         });
       }, 500);
+      dx = 1;
+      dy = 0;
+      lastKeyStroke = event.key;
     }
-    if (event.key === "a" || event.key === "ArrowLeft") {
+    if (left.includes(event.key) && dx !== 1) {
+      clearInterval(moveSwitch);
       moveSwitch = setInterval(() => {
         const leftBoxes = easyBoxes.numbers;
         easyGrid.forEach((box) => {
@@ -195,11 +215,13 @@ const snakeMove = (event) => {
           }
         });
       }, 500);
+      dx = -1;
+      dy = 0;
+      lastKeyStroke = event.key;
     }
-    lastKeyStroke = event.key;
   }
-  console.log(lastKeyStroke);
 };
+
 const runGame = () => {
   snakePlace();
   applePlace();
