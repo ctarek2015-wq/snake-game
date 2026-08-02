@@ -63,8 +63,6 @@ img {
   height: 88vh;
   min-width: 400px;
   border: solid 2px black;
-  display: flex;
-  contain: content;
 }
 
 /* /////////////////////////////////______GRIDS_______///////////////////////////// */
@@ -77,26 +75,11 @@ img {
   background-color: rgb(255, 255, 255);
 }
 /* ////////////////////////////////_____EASY_____/////////////////////////// */
-.box {
-  width: 90%;
-  aspect-ratio: 1/1;
-  margin: 1px;
-  background-color: rgb(144, 250, 130);
+.easy-grid {
+  margin: 80px auto;
 }
-div .a {
-  display: flex;
-}
-div .b {
-  display: flex;
-}
-div .c {
-  display: flex;
-}
-div .d {
-  display: flex;
-}
-div .e {
-  display: flex;
+#easy-grid {
+  background-color: aqua;
 }
 /* ////////////////////////_____MSGs______//////////////////////// */
 .state-block {
