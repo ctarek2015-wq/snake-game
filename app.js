@@ -3,33 +3,32 @@
 const gridSize = 20;
 const canvaSize = 400;
 const snakeColor = "white";
-const foodColor = "orange";
+const foodColor = "red";
 
 ////////////////////////////////_____Audio_______////////////////////////
 
 ////////////////////////////////_____Variables(State)_________////////////////////////
 
-let snake = [
-  { x: 14, y: 10 },
-  { x: 13, y: 10 },
-  { x: 12, y: 10 },
-];
+let snake = [{ x: 14, y: 10 }];
 let food = { x: 15, y: 10 };
 let dx = 0;
 let dy = 0;
 let score = 0;
 let gameLoop;
+let speed;
 
 ////////////////////////////////_____Cached_Element_References___////////////////////////
 
 const canvas = document.getElementById("easy-grid");
 const ctx = canvas.getContext("2d");
+const divs = document.querySelectorAll("div");
+const inputs = document.querySelectorAll("input");
 
 ////////////////////////////////_____Functions____////////////////////////
 
 const handleKeyPress = (event) => {
   if (gameLoop === undefined) {
-    gameLoop = setInterval(updateGame, 100);
+    gameLoop = setInterval(updateGame, 200);
   }
   const key = event.key;
   if (key === "ArrowUp" && dy !== 1) {
@@ -46,6 +45,8 @@ const handleKeyPress = (event) => {
     dy = 0;
   }
 };
+
+// console.log(gameOverMsg.classList.remove());
 const gameOver = () => {
   clearInterval(gameLoop);
   ctx.clearRect(0, 0, canvaSize, canvaSize);
@@ -53,24 +54,27 @@ const gameOver = () => {
   ctx.font = "30px Arial";
   ctx.fillText("Game Over", 120, 130);
   ctx.fillText(`Score: ${score}`, 135, 170);
+  divs.forEach((div) => {
+    div.classList.remove("lose");
+  });
 };
 const updateGame = () => {
   const head = { x: snake[0].x + dx, y: snake[0].y + dy };
-  if (head.x < 0) {
-    head.x = canvaSize / gridSize - 1;
-  } else if (head.x >= canvaSize / gridSize) {
-    head.x = 0;
-  } else if (head.y < 0) {
-    head.y = canvaSize / gridSize - 1;
-  } else if (head.y >= canvaSize / gridSize) {
-    head.y = 0;
-  }
 
   for (i = 0; i < snake.length; i++) {
     if (snake[i].x === head.x && snake[i].y === head.y) {
       gameOver();
       return;
     }
+  }
+  if (
+    head.x < 0 ||
+    head.x >= canvaSize / gridSize ||
+    head.y < 0 ||
+    head.y >= canvaSize / gridSize
+  ) {
+    gameOver();
+    return;
   }
   snake.unshift(head);
   if (head.x === food.x && head.y === food.y) {
