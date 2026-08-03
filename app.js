@@ -4,6 +4,10 @@ const gridSize = 20;
 const canvaSize = 400;
 const snakeColor = "white";
 const foodColor = "red";
+const up = ["w", "ArrowUp"];
+const down = ["s", "ArrowDown"];
+const left = ["a", "ArrowLeft"];
+const right = ["d", "ArrowRight"];
 
 ////////////////////////////////_____Audio_______////////////////////////
 
@@ -23,30 +27,41 @@ const canvas = document.getElementById("easy-grid");
 const ctx = canvas.getContext("2d");
 const divs = document.querySelectorAll("div");
 const inputs = document.querySelectorAll("input");
+const btns = document.querySelectorAll("button");
 
 ////////////////////////////////_____Functions____////////////////////////
+const handleClicks = (event) => {
+  const btnFinder = event.target.textContent.toLowerCase();
 
+  if (btnFinder.includes("restart") || btnFinder.includes("play again")) {
+    newGame();
+    divs.forEach((div) => {
+      if (div.classList.contains("lose")) {
+        div.style.display = "none";
+      }
+    });
+  }
+};
 const handleKeyPress = (event) => {
-  if (gameLoop === undefined) {
+  if (!gameLoop) {
     gameLoop = setInterval(updateGame, 200);
   }
   const key = event.key;
-  if (key === "ArrowUp" && dy !== 1) {
+  if (up.includes(key) && dy !== 1) {
     dx = 0;
     dy = -1;
-  } else if (key === "ArrowDown" && dy !== -1) {
+  } else if (down.includes(key) && dy !== -1) {
     dx = 0;
     dy = 1;
-  } else if (key === "ArrowLeft" && dx !== 1) {
+  } else if (left.includes(key) && dx !== 1) {
     dx = -1;
     dy = 0;
-  } else if (key === "ArrowRight" && dx !== -1) {
+  } else if (right.includes(key) && dx !== -1) {
     dx = 1;
     dy = 0;
   }
 };
 
-// console.log(gameOverMsg.classList.remove());
 const gameOver = () => {
   clearInterval(gameLoop);
   ctx.clearRect(0, 0, canvaSize, canvaSize);
@@ -55,12 +70,13 @@ const gameOver = () => {
   ctx.fillText("Game Over", 120, 130);
   ctx.fillText(`Score: ${score}`, 135, 170);
   divs.forEach((div) => {
-    div.classList.remove("lose");
+    if (div.classList.contains("lose")) {
+      div.style.display = "flex";
+    }
   });
 };
 const updateGame = () => {
   const head = { x: snake[0].x + dx, y: snake[0].y + dy };
-
   for (i = 0; i < snake.length; i++) {
     if (snake[i].x === head.x && snake[i].y === head.y) {
       gameOver();
@@ -107,9 +123,26 @@ const drawFood = () => {
   ctx.fillStyle = foodColor;
   ctx.fillRect(food.x * gridSize, food.y * gridSize, gridSize, gridSize);
 };
-generateFood();
+const newGame = () => {
+  const randomSnakePlace = [
+    {
+      x: Math.floor(Math.random() * gridSize),
+      y: Math.floor(Math.random() * gridSize),
+    },
+  ];
+  snake = randomSnakePlace;
+  clearInterval(gameLoop);
+  gameLoop = 0;
+  ctx.clearRect(0, 0, canvaSize, canvaSize);
+  generateFood();
+  drawSnake();
+  drawFood();
+};
 ////////////////////////////////_____Event_Listeners_____////////////////////////
 
 document.addEventListener("keydown", handleKeyPress);
-
+btns.forEach((btn) => {
+  btn.addEventListener("click", handleClicks);
+});
 ////////////////////////////////_____Initialization_________////////////////////////
+newGame();
