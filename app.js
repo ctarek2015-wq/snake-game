@@ -20,6 +20,8 @@ let dy = 0;
 let score = 0;
 let gameLoop;
 let speed;
+let isPaused = false;
+let isGameOver = false;
 
 ////////////////////////////////_____Cached_Element_References___////////////////////////
 
@@ -41,6 +43,29 @@ const handleClicks = (event) => {
       }
     });
   }
+  if (btnFinder.includes("pause") || btnFinder.includes("resume")) {
+    pauseResume();
+  }
+};
+const pauseResume = () => {
+  if (!isPaused) {
+    isPaused = true;
+    clearInterval(gameLoop);
+    divs.forEach((div) => {
+      if (div.classList.contains("pause-block")) {
+        div.style.display = "flex";
+      }
+    });
+    console.log("hi");
+  } else {
+    isPaused = false;
+    divs.forEach((div) => {
+      if (div.classList.contains("pause-block")) {
+        div.style.display = "none";
+      }
+    });
+    gameLoop = setInterval(updateGame, 200);
+  }
 };
 const handleKeyPress = (event) => {
   if (!gameLoop) {
@@ -60,20 +85,26 @@ const handleKeyPress = (event) => {
     dx = 1;
     dy = 0;
   }
+
+  if (key === "Escape") {
+    pauseResume();
+  }
 };
 
 const gameOver = () => {
   clearInterval(gameLoop);
+  //   isGameOver = true;
   ctx.clearRect(0, 0, canvaSize, canvaSize);
-  ctx.fillStyle = "white";
-  ctx.font = "30px Arial";
-  ctx.fillText("Game Over", 120, 130);
-  ctx.fillText(`Score: ${score}`, 135, 170);
+  //   ctx.fillStyle = "white";
+  //   ctx.font = "30px Arial";
+  //   ctx.fillText("Game Over", 120, 130);
+  //   ctx.fillText(`Score: ${score}`, 135, 170);
   divs.forEach((div) => {
     if (div.classList.contains("lose")) {
       div.style.display = "flex";
     }
   });
+  console.log(isGameOver);
 };
 const updateGame = () => {
   const head = { x: snake[0].x + dx, y: snake[0].y + dy };
@@ -133,10 +164,15 @@ const newGame = () => {
   snake = randomSnakePlace;
   clearInterval(gameLoop);
   gameLoop = 0;
+  isGameOver = false;
+  isPaused = false;
+  dx = 0;
+  dy = 0;
   ctx.clearRect(0, 0, canvaSize, canvaSize);
   generateFood();
   drawSnake();
   drawFood();
+  console.log(isGameOver);
 };
 ////////////////////////////////_____Event_Listeners_____////////////////////////
 

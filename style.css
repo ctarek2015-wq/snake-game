@@ -111,9 +111,9 @@ h2 {
   width: 200px;
   height: 50px;
 }
-.win {
+.lose {
   display: none;
 }
-.lose {
+.pause-block {
   display: none;
 }
