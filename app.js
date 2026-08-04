@@ -37,7 +37,7 @@ const btns = document.querySelectorAll("button");
 
 const pauseBlock = document.querySelector(".pause-block");
 const loseBlock = document.querySelector(".lose-block");
-const newPlayerBlock = document.getElementById("new-player");
+const newPlayerBlock = document.querySelector(".new-player");
 
 const submit = document.getElementById("submit");
 const playerNameInput = document.getElementById("player-name");
@@ -65,7 +65,7 @@ const handleClicks = (event) => {
   }
   // Handle submit button
   if (event.target.id === "submit") {
-    newPlayerBlock.style.display = "hidden";
+    newPlayerBlock.style.display = "none";
     console.log("hi");
   }
   console.log(event.target.id);
@@ -125,11 +125,16 @@ const handleInputs = (event) => {
 
 ////////////////////////////////_____Functions____////////////////////////
 
+const updateScoreDisplay = () => {
+  scoreLabel.innerText = "Score: " + score;
+};
+
 const savePlayerName = () => {
   const name = playerNameInput.value;
   if (name.trim() === "") {
-    alert("Please enter a name first.");
-    return;
+    // playerNameInput.value = "";
+    playerNameInput.placeholder = "NAME REQUIRED!";
+    return false;
   }
   localStorage.setItem("cachedPlayerName", name);
   playerNameLabel.innerText = "Welcome, " + name + "!";
