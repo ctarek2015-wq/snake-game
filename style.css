@@ -2,6 +2,7 @@
   font-size: 16px;
   background: #f2e8cf;
   box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 /* /////////////////////////////____TAGS____///////////////////////// */
 body {
@@ -32,14 +33,22 @@ button {
   cursor: pointer;
   border-radius: 5px;
   border: 1px solid #333;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
 }
 button:hover {
   background-color: #e0d5ba;
+  transform: translateY(-2px);
 }
-img {
-  position: relative;
-  max-width: 220px;
-  background: transparent;
+button:active {
+  transform: translateY(0px);
+}
+fieldset {
+  border-radius: 5px;
+  border: 1px solid black;
+  font-weight: bold;
+}
+label {
+  font-weight: 100;
 }
 .game-board {
   display: flex;
@@ -68,9 +77,11 @@ img {
 }
 .controls h1 {
   background: #a7c957;
-  padding: 5px;
+  padding: 12px;
   border-radius: 5px;
+  border: 3px solid black;
 }
+
 /* ////////////////////////________GAME_________/////////////////////// */
 .game {
   width: 68vw;
@@ -93,11 +104,11 @@ img {
   display: flex;
   border-radius: 5px;
   overflow: hidden;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
 }
 /* ////////////////////////////////_____EASY_____/////////////////////////// */
 #easy-grid {
   background-color: #d6c7a0;
-  box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.5);
   display: flex;
   width: 100%;
   height: 100%;
@@ -141,9 +152,17 @@ h2 {
   min-height: 250px;
   background: #d6c7a0;
 }
+.leader-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #d6c7a0;
+}
 .leader-title h1 {
   background: #a7c957;
   margin-top: 0;
+  padding: 10px;
+  border: solid 3px black;
 }
 .first-part {
   display: flex;
@@ -192,14 +211,21 @@ h2 {
   margin-bottom: 2px;
   justify-content: space-evenly;
   align-items: center;
+  background: #386641;
 }
 .banner h1 {
+  background: #386641;
   font-size: 2rem;
+  color: #f2e8cf;
 }
 .player-name,
 .score {
   font-size: 1.5rem;
   font-weight: bold;
+  padding: 8px;
+  border-radius: 8px;
+  background: #d6c7a025;
+  color: #f2e8cf;
 }
 
 /* //////////////// Intro Block //////////////// */
@@ -268,7 +294,10 @@ h2 {
 }
 
 canvas {
-  background: #06f1de;
+  background: #a7c957;
   width: 100%;
   height: 100%;
+  border-radius: 10px;
+  border: solid 1px black;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
 }

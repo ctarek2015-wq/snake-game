@@ -63,9 +63,15 @@ const handleClicks = (event) => {
   if (event.target.id === "submit") {
     const isSaved = savePlayerName();
     if (isSaved) {
-      newPlayerBlock.style.display = "none"; // Fixed bug: changed "hidden" to "none"
-      if (audioCtx.state === "suspended") audioCtx.resume();
+      newPlayerBlock.style.display = "none";
+      newGame();
+      loseBlock.style.display = "none";
     }
+  }
+
+  // Handle new player button
+  if (event.target.innerText === "New Player") {
+    newPlayerBlock.style.display = "flex";
   }
 };
 
@@ -88,9 +94,6 @@ const handleKeyPress = (event) => {
   const isRight = right.includes(key);
 
   if ((!isUp && !isDown && !isLeft && !isRight) || isPaused) return;
-
-  // Ensure audio unlocks on first interaction
-  if (audioCtx.state === "suspended") audioCtx.resume();
 
   if (!gameLoop) {
     gameLoop = setInterval(updateGame, speed);
@@ -150,7 +153,7 @@ function loadPlayerName() {
   const storedName = localStorage.getItem("cachedPlayerName");
   if (storedName) {
     playerNameLabel.innerText = "Welcome back, " + storedName + "!";
-    newPlayerBlock.style.display = "none"; // Hide intro if returning player
+    newPlayerBlock.style.display = "none";
   }
 }
 
