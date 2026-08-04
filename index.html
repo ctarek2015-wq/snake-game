@@ -9,10 +9,29 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <div class="new-player" id="new-player">
+      <h1>SNAKE GAME</h1>
+      <div class="instructions">
+        <h3>Instructions</h3>
+        <ul>
+          <li>Use arrows or (a,s,d,w) to move</li>
+          <li>press Esc to pause the game</li>
+        </ul>
+      </div>
+      <div class="intro">
+        <input
+          type="text"
+          id="player-name"
+          placeholder="Player Name"
+          required
+        />
+        <input type="submit" id="submit" />
+      </div>
+    </div>
     <header class="banner">
-      <img src="./assets/pic/snake-pics/banner.jpg" alt="snake-banner" />
       <h1>Snake Game</h1>
-      <img src="./assets/pic/snake-pics/banner.jpg" alt="snake-banner" />
+      <div class="player-name"></div>
+      <div class="score"></div>
     </header>
     <div class="game-board">
       <section class="controls">
@@ -26,21 +45,6 @@
           <input type="radio" name="speed" id="fast" value="fast" />
           <label for="fast">Fast</label>
         </fieldset>
-        <fieldset class="difficulty">
-          <legend>DIFFICULTY</legend>
-          <input
-            type="radio"
-            name="difficulty"
-            id="easy"
-            value="easy"
-            checked
-          />
-          <label for="easy">Easy</label>
-          <input type="radio" name="difficulty" id="medium" value="medium" />
-          <label for="medium">Medium</label>
-          <input type="radio" name="difficulty" id="hard" value="difficult" />
-          <label for="difficult">Hard</label>
-        </fieldset>
         <fieldset class="sound">
           <legend>SOUND</legend>
           <input type="checkbox" name="sound" id="mute-sfx" value="sfx" />
@@ -48,6 +52,19 @@
           <input type="checkbox" name="sound" id="mute-music" value="music" />
           <label for="music">Mute Music</label>
         </fieldset>
+        <div class="leaderboard">
+          <div class="leader-title"><h1>Leaderboard</h1></div>
+          <div class="first-part">
+            <div class="sec-part">
+              <h3 class="title">Player Name</h3>
+              <div class="player-names"></div>
+            </div>
+            <div class="sec-part">
+              <h3 class="title">Best Score</h3>
+              <div class="best-scores"></div>
+            </div>
+          </div>
+        </div>
         <div class="buttons">
           <button class="restart">Restart</button>
           <button class="pause">Pause</button>

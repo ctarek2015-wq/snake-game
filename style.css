@@ -1,5 +1,6 @@
 * {
   font-size: 16px;
+  background: #f2e8cf;
 }
 /* /////////////////////////////____TAGS____///////////////////////// */
 body {
@@ -10,24 +11,20 @@ body {
   justify-content: space-around;
 }
 h1 {
-  font-size: 2rem;
+  font-size: 1.5rem;
   text-align: center;
 }
 legend {
   font-size: 1.25rem;
+  background: #d6c7a0;
+}
+label {
+  background: #d6c7a0;
 }
 button {
   font-size: 1.5rem;
   margin: 2px;
   width: 100px;
-}
-header {
-  height: 10vh;
-  width: 96vw;
-  margin-bottom: 2px;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: start;
 }
 img {
   position: relative;
@@ -47,13 +44,19 @@ img {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  border: solid 2px black;
+  background: #d6c7a0;
   contain: content;
+  border-radius: 15px;
 }
 .buttons {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
+  background: #d6c7a0;
+}
+.controls h1 {
+  background: #a7c957;
+  padding: 5px;
 }
 
 /* ////////////////////////________GAME_________/////////////////////// */
@@ -62,7 +65,7 @@ img {
   width: 68vw;
   height: 88vh;
   min-width: 400px;
-  border: solid 2px black;
+  /* border: solid 2px black; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -77,14 +80,12 @@ img {
   margin: auto;
   background-color: rgb(244, 244, 250);
   display: flex;
-  /* justify-content: center;
-  align-items: center; */
 }
 /* ////////////////////////////////_____EASY_____/////////////////////////// */
 
 #easy-grid {
-  background-color: rgb(198, 197, 233);
-  border: solid 2px black;
+  background-color: #d6c7a0;
+  /* border: solid 2px black; */
   box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.5);
   display: flex;
   width: 100%;
@@ -94,11 +95,10 @@ img {
 }
 /* ////////////////////////_____MSGs______//////////////////////// */
 .state-block {
-  width: 60%;
+  width: 68vw;
+  height: 88vh;
   min-width: 400px;
-  max-width: 750px;
-  aspect-ratio: 1/1;
-  background-color: rgba(100, 100, 100, 0.8);
+  background-color: #f2e8cf;
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -117,4 +117,109 @@ h2 {
 }
 .pause-block {
   display: none;
+}
+/* ////////////////////////_____Leaderboard______//////////////////////// */
+
+.leaderboard {
+  display: flex;
+  flex-direction: column;
+  min-height: 300px;
+}
+.leader-title {
+  background: #a7c957;
+}
+.first-part {
+  display: flex;
+  justify-content: space-around;
+  align-items: start;
+}
+.sec-part {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
+.speed {
+  border: rgba(0, 0, 0, 0.9);
+  background: #d6c7a0;
+}
+.sound {
+  border: rgba(0, 0, 0, 0.9);
+  background: #d6c7a0;
+}
+#slow {
+  background: #d6c7a0;
+}
+/* ////////////////////////____________Score______//////////////////////// */
+.banner {
+  display: flex;
+  height: 10vh;
+  width: 96vw;
+  margin-bottom: 2px;
+  justify-content: space-evenly;
+  align-items: start;
+}
+.banner h1 {
+  font-size: 2rem;
+}
+.player-name {
+  font-size: 2rem;
+}
+.score {
+  font-size: 2rem;
+}
+
+/* //////////////// */
+#new-player {
+  display: none;
+}
+.new-player {
+  width: 100vw;
+  height: 70vh;
+  position: fixed;
+  background: #87a575;
+
+  z-index: 2;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.new-player h1 {
+  padding-top: 0;
+  margin-top: 0;
+  padding-bottom: 0;
+  margin-bottom: 0;
+  background: rgba(0, 0, 0, 0);
+
+  font-size: 7rem;
+}
+.instructions {
+  background: rgba(0, 0, 0, 0);
+}
+.instructions h3 {
+  text-align: center;
+  font-size: 2.5rem;
+  background: rgba(0, 0, 0, 0);
+}
+.instructions ul {
+  background: rgba(0, 0, 0, 0);
+}
+.instructions li {
+  font-size: 2rem;
+  background: rgba(0, 0, 0, 0);
+}
+.intro {
+  background: rgba(0, 0, 0, 0);
+}
+#player-name {
+  width: 25vw;
+  height: 4vh;
+  font-size: 1.25rem;
+}
+#submit {
+  width: 10vw;
+  height: 5vh;
+  font-size: 1.25rem;
+  min-width: 76px;
 }
