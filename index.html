@@ -19,9 +19,9 @@
         <h1>CONTROL PANEL</h1>
         <fieldset class="speed">
           <legend>SPEED</legend>
-          <input type="radio" name="speed" id="slow" value="slow" checked />
+          <input type="radio" name="speed" id="slow" value="slow" />
           <label for="slow">Slow</label>
-          <input type="radio" name="speed" id="med" value="med" />
+          <input type="radio" name="speed" id="med" value="med" checked />
           <label for="med">Med</label>
           <input type="radio" name="speed" id="fast" value="fast" />
           <label for="fast">Fast</label>
@@ -58,16 +58,13 @@
           <div class="easy-grid">
             <canvas id="easy-grid" width="400" height="400"></canvas>
           </div>
-          <div class="medium-grid"></div>
-          <div class="hard-grid"></div>
-          <div class="easy-grid"></div>
         </div>
         <div class="state-block pause-block">
           <img src="./assets/pic/snake-pics/block.gif" alt="dancing-snake" />
-          <h2 class="win-msg">GAME PAUSED</h2>
+          <h2 class="pause-msg">GAME PAUSED</h2>
           <button class="resume">Resume</button>
         </div>
-        <div class="state-block lose">
+        <div class="state-block lose-block">
           <img src="/assets/pic/snake-pics/block.gif" alt="dancing-snake" />
           <h2 class="lose-msg">Hard Luck</h2>
           <button class="restart" id="restart">Play Again</button>
