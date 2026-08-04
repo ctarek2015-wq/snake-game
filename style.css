@@ -156,7 +156,7 @@ h2 {
   width: 96vw;
   margin-bottom: 2px;
   justify-content: space-evenly;
-  align-items: start;
+  align-items: baseline;
 }
 .banner h1 {
   font-size: 2rem;
@@ -170,9 +170,9 @@ h2 {
 
 /* //////////////// */
 #new-player {
-  display: none;
+  /* display: none; */
 }
-.new-player {
+.new-player-class {
   width: 100vw;
   height: 70vh;
   position: fixed;
@@ -185,7 +185,7 @@ h2 {
   justify-content: space-around;
   align-items: center;
 }
-.new-player h1 {
+.new-player-class h1 {
   padding-top: 0;
   margin-top: 0;
   padding-bottom: 0;

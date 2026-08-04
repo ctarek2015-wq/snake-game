@@ -37,6 +37,16 @@ const btns = document.querySelectorAll("button");
 
 const pauseBlock = document.querySelector(".pause-block");
 const loseBlock = document.querySelector(".lose-block");
+const newPlayerBlock = document.getElementById("new-player");
+
+const submit = document.getElementById("submit");
+const playerNameInput = document.getElementById("player-name");
+
+const playerNameLabel = document.querySelector(".player-name");
+const scoreLabel = document.querySelector(".score");
+
+const playerNames = document.querySelector(".player-names");
+const highScores = document.querySelector(".high-scores");
 
 ////////////////////////////////_____Handle_Functions____////////////////////////
 
@@ -53,6 +63,12 @@ const handleClicks = (event) => {
   if (btnFinder.includes("pause") || btnFinder.includes("resume")) {
     pauseResume();
   }
+  // Handle submit button
+  if (event.target.id === "submit") {
+    newPlayerBlock.style.display = "hidden";
+    console.log("hi");
+  }
+  console.log(event.target.id);
 };
 
 const handleKeyPress = (event) => {
@@ -108,6 +124,27 @@ const handleInputs = (event) => {
 };
 
 ////////////////////////////////_____Functions____////////////////////////
+
+const savePlayerName = () => {
+  const name = playerNameInput.value;
+  if (name.trim() === "") {
+    alert("Please enter a name first.");
+    return;
+  }
+  localStorage.setItem("cachedPlayerName", name);
+  playerNameLabel.innerText = "Welcome, " + name + "!";
+  playerNameInput.value = "";
+};
+function loadPlayerName() {
+  const storedName = localStorage.getItem("cachedPlayerName");
+  if (storedName) {
+    playerNameLabel.innerText = "Welcome back, " + storedName + "!";
+  }
+}
+
+const newPlayer = (event) => {
+  //   newPlayerBlock.style.display = "flex";
+};
 
 const pauseResume = () => {
   // Can't pause when the game hasn't started
@@ -228,7 +265,6 @@ const newGame = () => {
   generateFood();
   drawSnake();
   drawFood();
-  console.log(isGameOver);
 };
 
 ////////////////////////////////_____Event_Listeners_____////////////////////////
@@ -239,5 +275,8 @@ document.addEventListener("keydown", handleKeyPress);
 btns.forEach((btn) => {
   btn.addEventListener("click", handleClicks);
 });
+submit.addEventListener("click", savePlayerName);
+window.onload = loadPlayerName;
+
 ////////////////////////////////_____Initialization_________////////////////////////
 newGame();
