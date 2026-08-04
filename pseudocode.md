@@ -1,143 +1,147 @@
-# Snake Game Pseudocode
+Snake Game Pseudocode
 
-## table of content:
+1. Game State and Constants
 
-| parts  | topic      |
-| :----- | :--------- |
-| part 1 | Game logic |
-| Part 2 | UI/UX      |
-| Part 3 | Html       |
-| Part 4 | Javascript |
+Define grid size, canvas size, and colors (snake, head, food).
 
-## 1. Game logic:
+Map movement controls (w, a, s, d, Arrow keys).
 
-- the initial _grid_ is `5 * 5` boxes.
-- the snake can move up or down, right or left in the grid as long as it's not the opposite direction of the current one.
-- the snake _grows_ by 1 box if he eats an apple.
-- there will be controls for:
-  - _speed_: `slow` `med` `fast`.
-  - _difficulty_:
-    - easy: `5 * 5`.
-    - medium: `10 * 10`.
-    - hard: `15 * 15`.
-  - _mute_ button.
-  - _restart_ button.
-  - _pause_ button.
-- the _win/lose_ condition:
-  - WIN: when there are no space left on the grid for the snake to move.
-  - lose: when the snake hits any edge of the grid or hits itself.
+Initialize game state variables:
 
-## 2. UI/UX:
+snake: Array of coordinate objects representing the snake's body.
 
-- The game will fill 100% of height and width of the view port screen.
-- The grid will take 2 thirds of the screen ftom the right, and the remaining third will be the controls for:
-  - _speed_: `slow` `med` `fast`.
-  - _difficulty_:
-    - easy: `5 * 5`.
-    - medium: `10 * 10`.
-    - hard: `15 * 15`.
-  - _mute_ sound effects button.
-  - _mute_ background music.
-  - _restart_ button.
-  - _pause_ button.
-- there is a background music, start game sound, winning sound, game over sound, eating sound
-- Up on winning: an overlaying object will show infront of the grid saying you win, and a button of play again.
-- Up on losing: an overlaying object will show infront of the grid saying you lose, and a button of play again.
+food: Object containing x, y coordinates.
 
-## 3. Html:
+dx, dy: Current movement direction on the x and y axes.
 
-- **body**: .game-interface `vh: 100%` / `vw: 100%`
-  - **_header_**: .banner
-  - **_section_**: .controls
-    - **h2**: .speed
-      - input radio: .slow
-      - input radio: .med
-      - input radio: .fast
-    - **h2**: .difficulty
-      - input radio: .easy
-      - input radio: .medium
-      - input radio: .hard
-    - **input** _checkbox_: .mute-sfx
-    - **input** _checkbox_: .mute-music
-    - **button**: .restart
-    - **button**: .pause
-  - **_section_**: .grid
-    - **div**: .easy-grid
-    - **div**: .medium-grid
-    - **div**: .hard-grid
-    - **div**: .win-block
-      - h2: .win-msg
-      - button: .restart
-    - **div**: .lose-block
-      - h2: .lose-msg
-      - button: .restart
+nextDx, nextDy: Queued movement direction to prevent self-collision on rapid input.
 
-## 4. Javascript:
+score: Current game score.
 
-> ### Constants:
+gameLoop: Reference to the interval running the game.
 
-- gameOverState: `false`
-- movementControls: w a s d ArrowUp ArrowLeft ArrowRight ArrowDown
-- timeIntervalSpeed: slow med fast
-- difficulty: easy medium hard
+speed: Current game speed (milliseconds per tick).
 
-> ### Audio:
+isPaused: Boolean tracking pause state.
 
-- win
-- lose
-- startGame
-- eating
-- crashing
-- moving
-- bgMusic
+isGameOver: Boolean tracking game over state.
 
-> ### Variables(State):
+2. DOM Elements
 
-- leaderBoard
+Cache references to HTML elements:
 
-> ### Cached Element References:
+Canvas context (ctx).
 
-> query selector for:
+Buttons (restart, pause, submit).
 
-- grids
-- winBlock
-- loseBlock
-- buttons
-- inputs
+Inputs (speed radio buttons, player name text input).
 
-> ### Functions:
+UI overlays (pause block, lose block, new player block).
 
-- init
-- reset
-- pause
-- render
-- gameStatus:
-  - selfHit
-  - edgeHit
-- checkDirection
-- directionMovement:
-  - upMove
-  - rightMove
-  - downMove
-  - leftMove
-- snakeInitPlace
-- applePlace
-- speed:
-  - setinterval for directionMovement
-- difficulty:
-  - reset
-  - toggle grids
+Text displays (player name, score).
 
-> ### Event Listeners:
+3. Initialization
 
-- keyboardStrokes
-- control elements:
-  - buttons
-  - inputs
+window.onload: Call loadPlayerName() to check for a returning player in local storage.
 
-> ### Initialization:
+newGame():
 
-- init():
-  - reset
+Reset game state variables (score, dx, dy, isPaused, isGameOver).
 
-#
+Clear any existing gameLoop.
+
+Set the snake to a single random position on the grid.
+
+Generate initial food location.
+
+Clear the canvas.
+
+Draw the initial snake and food.
+
+4. Input Handling
+
+handleClicks(event):
+
+If "restart" or "play again" is clicked, hide lose block and call newGame().
+
+If "pause" or "resume" is clicked, call pauseResume().
+
+If "submit" is clicked, save the player's name and hide the new player overlay.
+
+handleKeyPress(event):
+
+Prevent default scrolling for arrow keys and spacebar.
+
+If "Escape" is pressed, call pauseResume().
+
+Ignore input if the game is paused.
+
+Check which movement key was pressed.
+
+If a valid movement key is pressed (not opposite to current direction), update nextDx and nextDy.
+
+Start the gameLoop if it hasn't started yet.
+
+handleInputs(event):
+
+Listen for changes on speed radio buttons.
+
+Update the speed variable based on the selected input (slow, med, fast).
+
+5. Core Game Loop (updateGame())
+
+Update dx and dy with the values from nextDx and nextDy.
+
+Calculate the new head position based on the current head position and movement direction.
+
+Collision Detection:
+
+Self-Collision: Check if the new head coordinates match any part of the snake array. If yes, call gameOver().
+
+Wall Collision: Check if the new head coordinates are outside the grid boundaries. If yes, call gameOver().
+
+Movement & Eating:
+
+Add the new head to the front of the snake array (unshift).
+
+Check if the new head coordinates match the food coordinates.
+
+If yes: Increase score, generate new food (generateFood()).
+
+If no: Remove the tail segment of the snake (pop()).
+
+Rendering:
+
+Clear the canvas.
+
+Call drawSnake().
+
+Call drawFood().
+
+6. Helper Functions
+
+savePlayerName(): Save name from input to localStorage, update UI greeting.
+
+loadPlayerName(): Retrieve name from localStorage on page load, update UI greeting if found.
+
+pauseResume():
+
+Toggle isPaused state.
+
+If pausing: Clear gameLoop interval, show pause overlay.
+
+If resuming: Hide pause overlay, set gameLoop interval with current speed.
+
+gameOver():
+
+Clear gameLoop interval.
+
+Set isGameOver to true.
+
+Show the lose block overlay.
+
+drawSnake(): Iterate through the snake array. Draw the head color for index 0, and alternate body colors for the rest.
+
+generateFood(): Generate random x/y coordinates for food until the coordinates do not overlap with any segment of the snake.
+
+drawFood(): Draw a rectangle at the food coordinates.

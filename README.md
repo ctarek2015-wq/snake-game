@@ -1,143 +1,51 @@
-# Snake Game Pseudocode
+Not Ur Regular Snake
 
-## table of content:
+A classic Snake game built with HTML5 Canvas, CSS, and vanilla JavaScript. Guide the snake to eat the food, grow longer, and avoid hitting the walls or your own tail.
 
-| parts  | topic      |
-| :----- | :--------- |
-| part 1 | Game logic |
-| Part 2 | UI/UX      |
-| Part 3 | Html       |
-| Part 4 | Javascript |
+Features
 
-## 1. Game logic:
+Classic Gameplay: Smooth grid-based movement using a game loop on an HTML5 <canvas>.
 
-- the initial _grid_ is `5 * 5` boxes.
-- the snake can move up or down, right or left in the grid as long as it's not the opposite direction of the current one.
-- the snake _grows_ by 1 box if he eats an apple.
-- there will be controls for:
-  - _speed_: `slow` `med` `fast`.
-  - _difficulty_:
-    - easy: `5 * 5`.
-    - medium: `10 * 10`.
-    - hard: `15 * 15`.
-  - _mute_ button.
-  - _restart_ button.
-  - _pause_ button.
-- the _win/lose_ condition:
-  - WIN: when there are no space left on the grid for the snake to move.
-  - lose: when the snake hits any edge of the grid or hits itself.
+Variable Speed: Choose your difficulty level by selecting Slow, Med, or Fast speed settings from the control panel.
 
-## 2. UI/UX:
+Pause/Resume Functionality: Hit the Escape key or use the on-screen buttons to take a break.
 
-- The game will fill 100% of height and width of the view port screen.
-- The grid will take 2 thirds of the screen ftom the right, and the remaining third will be the controls for:
-  - _speed_: `slow` `med` `fast`.
-  - _difficulty_:
-    - easy: `5 * 5`.
-    - medium: `10 * 10`.
-    - hard: `15 * 15`.
-  - _mute_ sound effects button.
-  - _mute_ background music.
-  - _restart_ button.
-  - _pause_ button.
-- there is a background music, start game sound, winning sound, game over sound, eating sound
-- Up on winning: an overlaying object will show infront of the grid saying you win, and a button of play again.
-- Up on losing: an overlaying object will show infront of the grid saying you lose, and a button of play again.
+Local Storage Integration: The game remembers your player name across sessions using browser Local Storage.
 
-## 3. Html:
+Input Queuing: Implemented queuing for direction changes (nextDx, nextDy) to prevent the snake from accidentally turning back on itself when keys are pressed in rapid succession.
 
-- **body**: .game-interface `vh: 100%` / `vw: 100%`
-  - **_header_**: .banner
-  - **_section_**: .controls
-    - **h2**: .speed
-      - input radio: .slow
-      - input radio: .med
-      - input radio: .fast
-    - **h2**: .difficulty
-      - input radio: .easy
-      - input radio: .medium
-      - input radio: .hard
-    - **input** _checkbox_: .mute-sfx
-    - **input** _checkbox_: .mute-music
-    - **button**: .restart
-    - **button**: .pause
-  - **_section_**: .grid
-    - **div**: .easy-grid
-    - **div**: .medium-grid
-    - **div**: .hard-grid
-    - **div**: .win-block
-      - h2: .win-msg
-      - button: .restart
-    - **div**: .lose-block
-      - h2: .lose-msg
-      - button: .restart
+How to Play
 
-## 4. Javascript:
+Start: Enter your name in the intro screen and click "Submit".
 
-> ### Constants:
+Move: Use the Arrow Keys or W, A, S, D to control the direction of the snake. The game begins as soon as you press a movement key.
 
-- gameOverState: `false`
-- movementControls: w a s d ArrowUp ArrowLeft ArrowRight ArrowDown
-- timeIntervalSpeed: slow med fast
-- difficulty: easy medium hard
+Objective: Guide the snake's head to the red food block. Every time the snake eats, it grows longer and your score increases.
 
-> ### Audio:
+Pause: Press the Escape (Esc) key or click the "Pause" button on the control panel to pause the game.
 
-- win
-- lose
-- startGame
-- eating
-- crashing
-- moving
-- bgMusic
+Game Over: The game ends if the snake hits the edges of the grid or collides with its own body. Click "Play Again" or "Restart" to try again.
 
-> ### Variables(State):
+Project Structure
 
-- leaderBoard
+index.html: Contains the layout of the game, including the canvas, control panel, leaderboard UI, and overlay messages (intro, pause, game over).
 
-> ### Cached Element References:
+style.css: Provides the styling, colors, and layout for the game interface using Flexbox.
 
-> query selector for:
+app.js: Contains all the game logic, state management, collision detection, event listeners, and canvas rendering.
 
-- grids
-- winBlock
-- loseBlock
-- buttons
-- inputs
+Setup
 
-> ### Functions:
+This game requires no build tools, dependencies, or local server. Simply open the index.html file in any modern web browser to play.
 
-- init
-- reset
-- pause
-- render
-- gameStatus:
-  - selfHit
-  - edgeHit
-- checkDirection
-- directionMovement:
-  - upMove
-  - rightMove
-  - downMove
-  - leftMove
-- snakeInitPlace
-- applePlace
-- speed:
-  - setinterval for directionMovement
-- difficulty:
-  - reset
-  - toggle grids
+Future Enhancements / WIP
 
-> ### Event Listeners:
+Based on the current codebase, here are a few features planned for future updates:
 
-- keyboardStrokes
-- control elements:
-  - buttons
-  - inputs
+Live Score Updates: Connect the internal score variable to update the UI score display during gameplay.
 
-> ### Initialization:
+Audio Implementation: Add functional sound effects for eating, moving, and game over states, connecting them to the existing "Mute SFX" and "Mute Music" toggles.
 
-- init():
-  - reset
+Leaderboard Logic: Implement the logic to save high scores to local storage and dynamically populate the Leaderboard section in the UI.
 
-#
+Overlay Fixes: Fine-tune the intro screen submission to ensure the overlay smoothly hides (updating display: hidden to display: none).
