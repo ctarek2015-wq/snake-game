@@ -333,6 +333,8 @@ canvas {
   contain: content;
   width: 15vw;
   height: 15vh;
+  max-width: 200px;
+  max-height: 200px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -343,7 +345,10 @@ canvas {
   background-color: #f2e8cf;
 }
 img {
-  width: 10vw;
+  width: 15vw;
+  height: 15vh;
+  max-width: 150px;
+  max-height: 150px;
 }
 #back {
   margin: 20px;
@@ -353,6 +358,7 @@ img {
 
 /* Active state for selected themes */
 .theme-selected {
-  border: 8px solid #386641 !important;
+  border: 5px solid #df0505 !important;
   background-color: #f2e8cf !important;
+  box-shadow: 5px 5px 15px rgba(221, 7, 7, 0.897) !important;
 }
