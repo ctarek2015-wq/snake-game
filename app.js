@@ -113,7 +113,13 @@ const controlsPanel = document.getElementById("controls-panel");
 
 // Burger menu acts as a toggle for the side panel AND the pause state
 burgerMenuBtn.addEventListener("click", () => {
-  pauseResume();
+  if (isGameOver) {
+    // If game is over, just toggle the menu panel (skip pause logic)
+    controlsPanel.classList.toggle("active");
+  } else {
+    // Mid-game, trigger pause which also opens the menu
+    pauseResume();
+  }
 });
 
 // Handle pointer events for instantaneous touch interactions on mobile
@@ -142,7 +148,12 @@ const handleKeyPress = (event) => {
   }
 
   if (key === "Escape") {
-    pauseResume();
+    if (isGameOver) {
+      // If game is over, just toggle the menu panel
+      controlsPanel.classList.toggle("active");
+    } else {
+      pauseResume();
+    }
     return;
   }
 
