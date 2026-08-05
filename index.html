@@ -3,13 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="/assets/pic/snake-pics/favicon.png" />
+    <link rel="icon" href="./assets/pic/snake-pics/favicon.png" />
     <title>NOT UR REGULAR SNAKE</title>
     <script defer src="app.js"></script>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <!-- Intro Overlay -->
     <div class="new-player-class" id="new-player">
       <h1>SNAKE GAME</h1>
       <div class="instructions">
@@ -30,26 +29,35 @@
       </div>
     </div>
 
-    <!-- Theme Picker -->
     <div class="theme-window">
       <h1>THEME PICKER</h1>
       <div class="snake-body sub">
         <h3>Snake Body:</h3>
       </div>
-      <div class="snake-body sub">
-        <button class="gold-body">
-          <img src="./assets/pic/snake-pics/favicon.png" alt="" />
+      <div class="snake-body sub" id="theme-body-group">
+        <button class="theme-selected">
+          <img src="./assets/pic/snake-pics/basic-head.png" alt="basic-body" />
         </button>
-        <button></button>
-        <button></button>
-        <button></button>
+        <button>
+          <img src="./assets/pic/snake-pics/gold-body.png" alt="gold-body" />
+        </button>
+        <button>
+          <img src="./assets/pic/snake-pics/xmas-body.png" alt="xmas-body" />
+        </button>
+        <button>
+          <img
+            src="./assets/pic/snake-pics/carnival-body.png"
+            alt="carnival-body"
+          />
+        </button>
       </div>
+
       <div class="snake-head sub">
         <h3>Snake Head:</h3>
       </div>
-      <div class="snake-head sub">
-        <button>
-          <img src="./assets/pic/snake-pics/favicon.png" alt="basic-head" />
+      <div class="snake-head sub" id="theme-head-group">
+        <button class="theme-selected">
+          <img src="./assets/pic/snake-pics/basic-head.png" alt="basic-head" />
         </button>
         <button>
           <img src="./assets/pic/snake-pics/gold-head.png" alt="gold-head" />
@@ -64,11 +72,12 @@
           />
         </button>
       </div>
+
       <div class="snake-food sub">
         <h3>Snake Food:</h3>
       </div>
-      <div class="snake-food sub">
-        <button>
+      <div class="snake-food sub" id="theme-food-group">
+        <button class="theme-selected">
           <img src="./assets/pic/snake-pics/basic-food.png" alt="basic-food" />
         </button>
         <button>
@@ -87,14 +96,12 @@
       <button id="back">Back</button>
     </div>
 
-    <!-- Header -->
     <header class="banner">
       <h1>Snake Game</h1>
       <div class="player-name">Welcome!</div>
       <div class="score">Score: 0</div>
     </header>
 
-    <!-- Main Application -->
     <div class="game-board">
       <section class="controls">
         <h1>CONTROL PANEL</h1>
@@ -128,6 +135,10 @@
               <h3 class="title">Score</h3>
               <div class="high-scores"></div>
             </div>
+            <div class="sec-part">
+              <h3 class="title">Speed</h3>
+              <div class="leaderboard-speeds"></div>
+            </div>
           </div>
         </div>
 
@@ -137,7 +148,6 @@
         </div>
       </section>
 
-      <!-- Canvas Area -->
       <section class="game">
         <div class="grids">
           <div class="easy-grid">
