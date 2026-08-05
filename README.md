@@ -1,51 +1,53 @@
-Not Ur Regular Snake
+# Not Ur Regular Snake Game 🐍
 
-A classic Snake game built with HTML5 Canvas, CSS, and vanilla JavaScript. Guide the snake to eat the food, grow longer, and avoid hitting the walls or your own tail.
+A feature-rich, web-based classic Snake game built with HTML5 Canvas, CSS, and JavaScript. It includes customizable themes, local storage leaderboards, and audio support.
 
-Features
+### **Features**
 
-Classic Gameplay: Smooth grid-based movement using a game loop on an HTML5 <canvas>.
+- **Classic Gameplay**: Move with W, A, S, D or Arrow keys. Eat food to grow and increase your score. Avoid the walls and your own tail!
 
-Variable Speed: Choose your difficulty level by selecting Slow, Med, or Fast speed settings from the control panel.
+- **Customizable Themes**: Mix and match themes for the Snake Head, Body, and Food. Includes Basic, Golden, Xmas, and Carnival themes.
 
-Pause/Resume Functionality: Hit the Escape key or use the on-screen buttons to take a break.
+- **Audio SFX & Music**: Enjoy background music while you play, with satisfying sound effects for eating and game over states. Includes mute toggles.
 
-Local Storage Integration: The game remembers your player name across sessions using browser Local Storage.
+- **Adjustable Speed**: Choose between Slow, Med, and Fast difficulties.
 
-Input Queuing: Implemented queuing for direction changes (nextDx, nextDy) to prevent the snake from accidentally turning back on itself when keys are pressed in rapid succession.
+- **Local Leaderboard**: Saves your player name and top 5 high scores locally in your browser so you can compete against yourself.
 
-How to Play
+- **Pause Functionality**: Press `Escape` or use the on-screen button to pause the game at any time.
 
-Start: Enter your name in the intro screen and click "Submit".
+### **How to Run**
 
-Move: Use the Arrow Keys or W, A, S, D to control the direction of the snake. The game begins as soon as you press a movement key.
+Because this project uses a single-file architecture (all CSS and JS are bundled into one HTML file), running it is incredibly simple.
 
-Objective: Guide the snake's head to the red food block. Every time the snake eats, it grows longer and your score increases.
+1. Download or clone the `index.html` file to your local machine.
 
-Pause: Press the Escape (Esc) key or click the "Pause" button on the control panel to pause the game.
+2. Double-click `index.html` to open it in your preferred web browser (Chrome, Firefox, Safari, Edge, etc.).
 
-Game Over: The game ends if the snake hits the edges of the grid or collides with its own body. Click "Play Again" or "Restart" to try again.
+3. No server or build process is required!
 
-Project Structure
+(Note: In the provided code, generic placeholder images and audio URLs are used. For the best experience, replace these URLs in the `<audio>` and `<img>` tags, as well as the JS objects, with your own local assets).
 
-index.html: Contains the layout of the game, including the canvas, control panel, leaderboard UI, and overlay messages (intro, pause, game over).
+### **Controls**
 
-style.css: Provides the styling, colors, and layout for the game interface using Flexbox.
+- **Movement**: `W`, `A`, `S`, `D` or `Arrow Up`, `Arrow Down`, `Arrow Left`, `Arrow Right`.
 
-app.js: Contains all the game logic, state management, collision detection, event listeners, and canvas rendering.
+- **Pause**: `Escape` key.
 
-Setup
+- **Start/Restart**: Use the on-screen buttons.
 
-This game requires no build tools, dependencies, or local server. Simply open the index.html file in any modern web browser to play.
+### **Architecture**
 
-Future Enhancements / WIP
+- **HTML5 Canvas**: Used for rendering the game grid, snake, and food efficiently.
 
-Based on the current codebase, here are a few features planned for future updates:
+- **JavaScript**: Handles the game loop (`setInterval`), collision detection, state management, and DOM manipulation.
 
-Live Score Updates: Connect the internal score variable to update the UI score display during gameplay.
+- **CSS**: Flexbox and Absolute positioning are used to create the layout, control panels, and overlay menus.
 
-Audio Implementation: Add functional sound effects for eating, moving, and game over states, connecting them to the existing "Mute SFX" and "Mute Music" toggles.
+### **Customizing Assets**
 
-Leaderboard Logic: Implement the logic to save high scores to local storage and dynamically populate the Leaderboard section in the UI.
+If you wish to use your own images or audio files, simply update the `src` attributes in the code:
 
-Overlay Fixes: Fine-tune the intro screen submission to ensure the overlay smoothly hides (updating display: hidden to display: none).
+1. **Audio**: Find the `<audio>` tags at the top of the `<body>` in `index.html` and change the `src` attribute within the `<source>` tags to your `.mp3` or `.wav` files.
+
+2. **Images**: Search for the `headColor`, `foodColor`, and the Theme Picker HTML section in the file, and replace the placeholder URLs (e.g., https://placehold.co/...) with paths to your local image assets (e.g., ./assets/my-head.png).

@@ -1,6 +1,17 @@
+/* =========================================
+         === CONFIGURATION & CONSTANTS ===
+         ========================================= */
 const gridSize = 20;
 const canvaSize = 400;
 
+const up = ["w", "ArrowUp", "W"];
+const down = ["s", "ArrowDown", "S"];
+const left = ["a", "ArrowLeft", "A"];
+const right = ["d", "ArrowRight", "D"];
+
+/* =========================================
+         === ASSETS & THEMES ===
+         ========================================= */
 const bodyColor = {
   basic: { snakeColorOne: "rgb(0, 121, 0)", snakeColorTwo: "rgb(50, 158, 50)" },
   gold: {
@@ -36,19 +47,23 @@ const foodColor = {
   carnival: new Image(),
 };
 
-headColor.gold.src = "/assets/pic/snake-pics/gold-head.png";
-headColor.xmas.src = "/assets/pic/snake-pics/xmas-head.png";
-headColor.carnival.src = "/assets/pic/snake-pics/carnival-head.png";
-foodColor.basic.src = "/assets/pic/snake-pics/basic-food.png";
-foodColor.gold.src = "/assets/pic/snake-pics/gold-food.png";
-foodColor.xmas.src = "/assets/pic/snake-pics/xmas-food.png";
-foodColor.carnival.src = "/assets/pic/snake-pics/carnival-food.png";
+headColor.gold.src = "./assets/pic/snake-pics/gold-head.png";
+headColor.xmas.src = "./assets/pic/snake-pics/xmas-head.png";
+headColor.carnival.src = "./assets/pic/snake-pics/carnival-head.png";
+foodColor.basic.src = "./assets/pic/snake-pics/basic-food.png";
+foodColor.gold.src = "./assets/pic/snake-pics/gold-food.png";
+foodColor.xmas.src = "./assets/pic/snake-pics/xmas-food.png";
+foodColor.carnival.src = "./assets/pic/snake-pics/carnival-food.png";
 
-const up = ["w", "ArrowUp", "W"];
-const down = ["s", "ArrowDown", "S"];
-const left = ["a", "ArrowLeft", "A"];
-const right = ["d", "ArrowRight", "D"];
+let activeThemes = {
+  head: "basic",
+  body: "basic",
+  food: "basic",
+};
 
+/* =========================================
+         === GAME STATE VARIABLES ===
+         ========================================= */
 let snake = [];
 let food = { x: 15, y: 10 };
 let dx = 0;
@@ -61,13 +76,9 @@ let speed = 300;
 let isPaused = false;
 let isGameOver = false;
 
-// Track the selected themes
-let activeThemes = {
-  head: "basic",
-  body: "basic",
-  food: "basic",
-};
-
+/* =========================================
+         === DOM ELEMENTS ===
+         ========================================= */
 const canvas = document.getElementById("easy-grid-canvas");
 const ctx = canvas.getContext("2d");
 
@@ -84,7 +95,6 @@ const themeWindowBlock = document.querySelector(".theme-window");
 
 const submitBtn = document.getElementById("submit");
 const playerNameInput = document.getElementById("player-name");
-
 const playerNameLabel = document.querySelector(".player-name");
 const scoreLabel = document.querySelector(".score");
 
@@ -94,76 +104,37 @@ const leaderboardSpeedsContainer = document.querySelector(
   ".leaderboard-speeds",
 );
 
-const handleClicks = (event) => {
-  const btnFinder = event.target.textContent.toLowerCase();
+const burgerMenuBtn = document.getElementById("burger-menu");
+const controlsPanel = document.getElementById("controls-panel");
 
-  if (btnFinder.includes("restart") || btnFinder.includes("play again")) {
-    newGame();
-    loseBlock.style.display = "none";
-  }
-  if (btnFinder.includes("pause") || btnFinder.includes("resume")) {
-    pauseResume();
-  }
-  if (event.target.id === "submit") {
-    const isSaved = savePlayerName();
-    if (isSaved) {
-      newPlayerBlock.style.display = "none";
-      newGame();
-      loseBlock.style.display = "none";
-    }
-  }
-  if (btnFinder.includes("new player")) {
-    newPlayerBlock.style.display = "flex";
-  }
-  if (btnFinder.includes("back") || event.target.id === "back") {
-    themeWindowBlock.style.display = "none";
-  }
-  if (btnFinder.includes("theme picker")) {
-    themeWindowBlock.style.display = "flex";
-  }
+/* =========================================
+         === EVENT LISTENERS ===
+         ========================================= */
 
-  // --- THEME PICKER FIX ---
-  // Find if an image was clicked, or a button containing the image
-  let targetImg = null;
-  if (event.target.tagName === "IMG") {
-    targetImg = event.target;
-  } else if (
-    event.target.tagName === "BUTTON" &&
-    event.target.querySelector("img")
-  ) {
-    targetImg = event.target.querySelector("img");
-  }
+// Burger menu acts as a toggle for the side panel AND the pause state
+burgerMenuBtn.addEventListener("click", () => {
+  pauseResume();
+});
 
-  if (targetImg && targetImg.alt) {
-    const altText = targetImg.alt;
-    const [themeName, bodyPart] = altText.split("-"); // e.g. ["gold", "head"]
+// Handle pointer events for instantaneous touch interactions on mobile
+document.getElementById("btn-up").addEventListener("pointerdown", (e) => {
+  e.preventDefault();
+  handleDpadInput("up");
+});
+document.getElementById("btn-down").addEventListener("pointerdown", (e) => {
+  e.preventDefault();
+  handleDpadInput("down");
+});
+document.getElementById("btn-left").addEventListener("pointerdown", (e) => {
+  e.preventDefault();
+  handleDpadInput("left");
+});
+document.getElementById("btn-right").addEventListener("pointerdown", (e) => {
+  e.preventDefault();
+  handleDpadInput("right");
+});
 
-    if (themeName && bodyPart) {
-      // Update State
-      activeThemes[bodyPart] = themeName;
-
-      // Visual Button Update
-      const buttonContainer = document.getElementById(
-        `theme-${bodyPart}-group`,
-      );
-      if (buttonContainer) {
-        buttonContainer
-          .querySelectorAll("button")
-          .forEach((b) => b.classList.remove("theme-selected"));
-        const clickedBtn = targetImg.parentElement;
-        clickedBtn.classList.add("theme-selected");
-      }
-
-      // Request a re-draw immediately so user sees changes if paused
-      if (!isGameOver) {
-        ctx.clearRect(0, 0, canvaSize, canvaSize);
-        drawSnake();
-        drawFood();
-      }
-    }
-  }
-};
-
+// Handle physical keyboard strokes
 const handleKeyPress = (event) => {
   const key = event.key;
   if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " "].includes(key)) {
@@ -201,6 +172,30 @@ const handleKeyPress = (event) => {
   }
 };
 
+// Handle on-screen D-Pad mapping
+const handleDpadInput = (direction) => {
+  if (isPaused || isGameOver) return;
+
+  if (!gameLoop) {
+    gameLoop = setInterval(updateGame, speed);
+  }
+
+  if (direction === "up" && dy !== 1) {
+    nextDx = 0;
+    nextDy = -1;
+  } else if (direction === "down" && dy !== -1) {
+    nextDx = 0;
+    nextDy = 1;
+  } else if (direction === "left" && dx !== 1) {
+    nextDx = -1;
+    nextDy = 0;
+  } else if (direction === "right" && dx !== -1) {
+    nextDx = 1;
+    nextDy = 0;
+  }
+};
+
+// Handle UI configurations (Speed)
 const handleInputs = (event) => {
   const id = event.target.id;
   if (id === "slow") speed = 450;
@@ -213,6 +208,278 @@ const handleInputs = (event) => {
   }
 };
 
+// Handle overarching generic clicks on buttons/images
+const handleClicks = (event) => {
+  const btnFinder = event.target.textContent.toLowerCase();
+
+  if (btnFinder.includes("restart") || btnFinder.includes("play again")) {
+    newGame();
+    loseBlock.style.display = "none";
+    controlsPanel.classList.remove("active"); // Close panel if open
+  }
+
+  // "Resume" triggers pause toggle to close overlays and panel
+  if (btnFinder.includes("resume")) {
+    pauseResume();
+  }
+  if (event.target.id === "submit") {
+    const isSaved = savePlayerName();
+    if (isSaved) {
+      newPlayerBlock.style.display = "none";
+      newGame();
+      loseBlock.style.display = "none";
+    }
+  }
+  if (btnFinder.includes("new player")) {
+    newPlayerBlock.style.display = "flex";
+  }
+  if (btnFinder.includes("back") || event.target.id === "back") {
+    themeWindowBlock.style.display = "none";
+  }
+  if (btnFinder.includes("theme picker")) {
+    themeWindowBlock.style.display = "flex";
+  }
+
+  // Logic for Theme Selection
+  let targetImg = null;
+  if (event.target.tagName === "IMG") {
+    targetImg = event.target;
+  } else if (
+    event.target.tagName === "BUTTON" &&
+    event.target.querySelector("img")
+  ) {
+    targetImg = event.target.querySelector("img");
+  }
+
+  if (targetImg && targetImg.alt) {
+    const altText = targetImg.alt;
+    const [themeName, bodyPart] = altText.split("-");
+
+    if (themeName && bodyPart) {
+      activeThemes[bodyPart] = themeName;
+      const buttonContainer = document.getElementById(
+        `theme-${bodyPart}-group`,
+      );
+      if (buttonContainer) {
+        buttonContainer
+          .querySelectorAll("button")
+          .forEach((b) => b.classList.remove("theme-selected"));
+        const clickedBtn = targetImg.parentElement;
+        clickedBtn.classList.add("theme-selected");
+      }
+      if (!isGameOver) {
+        ctx.clearRect(0, 0, canvaSize, canvaSize);
+        drawSnake();
+        drawFood();
+      }
+    }
+  }
+};
+
+/* =========================================
+         === CORE GAME LOGIC ===
+         ========================================= */
+
+const pauseResume = () => {
+  if (isGameOver) return; // Block toggling if game is over
+
+  if (!isPaused) {
+    isPaused = true;
+    clearInterval(gameLoop);
+    pauseBlock.style.display = "flex";
+    controlsPanel.classList.add("active"); // Sync panel opening
+  } else {
+    isPaused = false;
+    pauseBlock.style.display = "none";
+    controlsPanel.classList.remove("active"); // Sync panel closing
+    if (dx !== 0 || dy !== 0) {
+      gameLoop = setInterval(updateGame, speed);
+    }
+  }
+};
+
+const gameOver = () => {
+  clearInterval(gameLoop);
+  isGameOver = true;
+  saveToLeaderboard();
+  loseBlock.style.display = "flex";
+};
+
+const updateGame = () => {
+  dx = nextDx;
+  dy = nextDy;
+  const head = { x: snake[0].x + dx, y: snake[0].y + dy };
+
+  // Collision logic (Body)
+  for (let i = 0; i < snake.length; i++) {
+    if (snake[i].x === head.x && snake[i].y === head.y) {
+      gameOver();
+      return;
+    }
+  }
+
+  // Collision logic (Walls)
+  if (
+    head.x < 0 ||
+    head.x >= canvaSize / gridSize ||
+    head.y < 0 ||
+    head.y >= canvaSize / gridSize
+  ) {
+    gameOver();
+    return;
+  }
+
+  // Move execution
+  snake.unshift(head);
+
+  // Feed execution
+  if (head.x === food.x && head.y === food.y) {
+    score += 10;
+    updateScoreDisplay();
+    generateFood();
+  } else {
+    snake.pop();
+  }
+
+  // Re-render
+  ctx.clearRect(0, 0, canvaSize, canvaSize);
+  drawSnake();
+  drawFood();
+};
+
+const newGame = () => {
+  const randomSnakePlace = [
+    {
+      x: Math.floor(Math.random() * (canvaSize / gridSize)),
+      y: Math.floor(Math.random() * (canvaSize / gridSize)),
+    },
+  ];
+  snake = randomSnakePlace;
+  clearInterval(gameLoop);
+  gameLoop = 0;
+  isGameOver = false;
+  isPaused = false;
+  score = 0;
+  updateScoreDisplay();
+
+  nextDx = 0;
+  nextDy = 0;
+  dx = 0;
+  dy = 0;
+
+  ctx.clearRect(0, 0, canvaSize, canvaSize);
+  generateFood();
+  drawSnake();
+  drawFood();
+};
+
+const generateFood = () => {
+  let isFoodOnSnake = true;
+  while (isFoodOnSnake) {
+    food = {
+      x: Math.floor(Math.random() * (canvaSize / gridSize)),
+      y: Math.floor(Math.random() * (canvaSize / gridSize)),
+    };
+    isFoodOnSnake = snake.some(
+      (part) => part.x === food.x && part.y === food.y,
+    );
+  }
+};
+
+/* =========================================
+         === RENDERING (CANVAS) ===
+         ========================================= */
+const drawSnake = () => {
+  snake.forEach((part, idx) => {
+    if (idx === 0) {
+      // Render Head
+      const currentHeadTheme = headColor[activeThemes.head];
+      if (
+        currentHeadTheme instanceof Image &&
+        currentHeadTheme.complete &&
+        currentHeadTheme.naturalHeight !== 0
+      ) {
+        ctx.drawImage(
+          currentHeadTheme,
+          part.x * gridSize,
+          part.y * gridSize,
+          gridSize,
+          gridSize,
+        );
+      } else {
+        ctx.fillStyle =
+          typeof currentHeadTheme === "string" ? currentHeadTheme : "#083308";
+        ctx.beginPath();
+        ctx.roundRect(
+          part.x * gridSize + 1,
+          part.y * gridSize + 1,
+          gridSize - 2,
+          gridSize - 2,
+          4,
+        );
+        ctx.fill();
+      }
+    } else {
+      // Render Body
+      const currentBodyTheme = bodyColor[activeThemes.body];
+      if (Array.isArray(currentBodyTheme)) {
+        ctx.fillStyle = currentBodyTheme[idx % currentBodyTheme.length];
+      } else {
+        ctx.fillStyle =
+          idx % 2
+            ? currentBodyTheme.snakeColorOne
+            : currentBodyTheme.snakeColorTwo;
+      }
+      ctx.beginPath();
+      ctx.roundRect(
+        part.x * gridSize + 1,
+        part.y * gridSize + 1,
+        gridSize - 2,
+        gridSize - 2,
+        4,
+      );
+      ctx.fill();
+    }
+  });
+};
+
+const drawFood = () => {
+  const currentFoodTheme = foodColor[activeThemes.food];
+  if (
+    currentFoodTheme instanceof Image &&
+    currentFoodTheme.complete &&
+    currentFoodTheme.naturalHeight !== 0
+  ) {
+    ctx.drawImage(
+      currentFoodTheme,
+      food.x * gridSize,
+      food.y * gridSize,
+      gridSize,
+      gridSize,
+    );
+  } else {
+    const fallbackColors = {
+      basic: "rgb(240, 8, 8)",
+      gold: "rgb(255, 215, 0)",
+      xmas: "rgb(0, 128, 0)",
+      carnival: "rgb(255, 0, 255)",
+    };
+    ctx.fillStyle = fallbackColors[activeThemes.food] || "red";
+    ctx.beginPath();
+    ctx.arc(
+      food.x * gridSize + gridSize / 2,
+      food.y * gridSize + gridSize / 2,
+      gridSize / 2 - 2,
+      0,
+      2 * Math.PI,
+    );
+    ctx.fill();
+  }
+};
+
+/* =========================================
+         === PLAYER & LEADERBOARD DATA ===
+         ========================================= */
 const updateScoreDisplay = () => {
   scoreLabel.innerText = "Score: " + score;
 };
@@ -270,212 +537,24 @@ const saveToLeaderboard = () => {
 
   scores.push({ name: currentName, score: score, speed: currentSpeedStr });
   scores.sort((a, b) => b.score - a.score);
-  scores = scores.slice(0, 5);
+  scores = scores.slice(0, 5); // Keep top 5
 
   localStorage.setItem("snakeLeaderboard", JSON.stringify(scores));
   updateLeaderboardUI();
 };
 
-const pauseResume = () => {
-  if (!isGameOver && !gameLoop && !isPaused) return;
-
-  if (!isPaused && !isGameOver) {
-    isPaused = true;
-    clearInterval(gameLoop);
-    pauseBlock.style.display = "flex";
-  } else {
-    isPaused = false;
-    pauseBlock.style.display = "none";
-    if (dx !== 0 || dy !== 0) {
-      gameLoop = setInterval(updateGame, speed);
-    }
-  }
-};
-
-const gameOver = () => {
-  clearInterval(gameLoop);
-  isGameOver = true;
-  saveToLeaderboard();
-  loseBlock.style.display = "flex";
-};
-
-const updateGame = () => {
-  dx = nextDx;
-  dy = nextDy;
-  const head = { x: snake[0].x + dx, y: snake[0].y + dy };
-
-  for (let i = 0; i < snake.length; i++) {
-    if (snake[i].x === head.x && snake[i].y === head.y) {
-      gameOver();
-      return;
-    }
-  }
-
-  if (
-    head.x < 0 ||
-    head.x >= canvaSize / gridSize ||
-    head.y < 0 ||
-    head.y >= canvaSize / gridSize
-  ) {
-    gameOver();
-    return;
-  }
-
-  snake.unshift(head);
-  if (head.x === food.x && head.y === food.y) {
-    score += 10;
-    updateScoreDisplay();
-    generateFood();
-  } else {
-    snake.pop();
-  }
-  ctx.clearRect(0, 0, canvaSize, canvaSize);
-  drawSnake();
-  drawFood();
-};
-
-const drawSnake = () => {
-  snake.forEach((part, idx) => {
-    if (idx === 0) {
-      // -- HEAD DRAWING --
-      const currentHeadTheme = headColor[activeThemes.head];
-
-      // Check if it's an image and has loaded successfully
-      if (
-        currentHeadTheme instanceof Image &&
-        currentHeadTheme.complete &&
-        currentHeadTheme.naturalHeight !== 0
-      ) {
-        ctx.drawImage(
-          currentHeadTheme,
-          part.x * gridSize,
-          part.y * gridSize,
-          gridSize,
-          gridSize,
-        );
-      } else {
-        // Fallback drawing if image is missing/broken, or if it's a solid color (basic theme)
-        ctx.fillStyle =
-          typeof currentHeadTheme === "string" ? currentHeadTheme : "#083308"; // Default dark green
-        ctx.beginPath();
-        ctx.roundRect(
-          part.x * gridSize + 1,
-          part.y * gridSize + 1,
-          gridSize - 2,
-          gridSize - 2,
-          4,
-        );
-        ctx.fill();
-      }
-    } else {
-      // -- BODY DRAWING --
-      const currentBodyTheme = bodyColor[activeThemes.body];
-
-      if (Array.isArray(currentBodyTheme)) {
-        // Carnival (array of colors)
-        ctx.fillStyle = currentBodyTheme[idx % currentBodyTheme.length];
-      } else {
-        // Alternating two-color themes (basic, gold, xmas)
-        ctx.fillStyle =
-          idx % 2
-            ? currentBodyTheme.snakeColorOne
-            : currentBodyTheme.snakeColorTwo;
-      }
-      ctx.beginPath();
-      ctx.roundRect(
-        part.x * gridSize + 1,
-        part.y * gridSize + 1,
-        gridSize - 2,
-        gridSize - 2,
-        4,
-      );
-      ctx.fill();
-    }
-  });
-};
-
-const generateFood = () => {
-  let isFoodOnSnake = true;
-  while (isFoodOnSnake) {
-    food = {
-      x: Math.floor(Math.random() * (canvaSize / gridSize)),
-      y: Math.floor(Math.random() * (canvaSize / gridSize)),
-    };
-    isFoodOnSnake = snake.some(
-      (part) => part.x === food.x && part.y === food.y,
-    );
-  }
-};
-
-const drawFood = () => {
-  const currentFoodTheme = foodColor[activeThemes.food];
-
-  // Ensure we properly draw images (ctx.fillStyle doesn't accept image objects)
-  if (
-    currentFoodTheme instanceof Image &&
-    currentFoodTheme.complete &&
-    currentFoodTheme.naturalHeight !== 0
-  ) {
-    ctx.drawImage(
-      currentFoodTheme,
-      food.x * gridSize,
-      food.y * gridSize,
-      gridSize,
-      gridSize,
-    );
-  } else {
-    // Fallback to circles if the image URL is broken/missing
-    const fallbackColors = {
-      basic: "rgb(240, 8, 8)", // Red apple fallback
-      gold: "rgb(255, 215, 0)", // Gold fallback
-      xmas: "rgb(0, 128, 0)", // Green fallback
-      carnival: "rgb(255, 0, 255)", // Magenta fallback
-    };
-    ctx.fillStyle = fallbackColors[activeThemes.food] || "red";
-    ctx.beginPath();
-    ctx.arc(
-      food.x * gridSize + gridSize / 2,
-      food.y * gridSize + gridSize / 2,
-      gridSize / 2 - 2,
-      0,
-      2 * Math.PI,
-    );
-    ctx.fill();
-  }
-};
-
-const newGame = () => {
-  const randomSnakePlace = [
-    {
-      x: Math.floor(Math.random() * (canvaSize / gridSize)),
-      y: Math.floor(Math.random() * (canvaSize / gridSize)),
-    },
-  ];
-  snake = randomSnakePlace;
-  clearInterval(gameLoop);
-  gameLoop = 0;
-  isGameOver = false;
-  isPaused = false;
-  score = 0;
-  updateScoreDisplay();
-
-  nextDx = 0;
-  nextDy = 0;
-  dx = 0;
-  dy = 0;
-
-  ctx.clearRect(0, 0, canvaSize, canvaSize);
-  generateFood();
-  drawSnake();
-  drawFood();
-};
-
+/* =========================================
+         === INITIALIZATION ===
+         ========================================= */
 inputs.forEach((input) => {
   input.addEventListener("change", handleInputs);
 });
 document.addEventListener("keydown", handleKeyPress);
 btns.forEach((btn) => {
-  btn.addEventListener("click", handleClicks);
+  // filter out touch D-pad buttons from generic click handling
+  if (!btn.classList.contains("d-btn")) {
+    btn.addEventListener("click", handleClicks);
+  }
 });
 
 window.onload = () => {

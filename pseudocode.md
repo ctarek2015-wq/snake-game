@@ -1,147 +1,190 @@
-Snake Game Pseudocode
+# Snake Game - Pseudocode
 
-1. Game State and Constants
+### 1. Initialization
 
-Define grid size, canvas size, and colors (snake, head, food).
+- **Define Constants**: Grid size, Canvas size, Movement keys (W,A,S,D, Arrows).
 
-Map movement controls (w, a, s, d, Arrow keys).
+- **Define Assets**: Dictionaries/Objects for Snake Head, Body, and Food themes (colors and images).
 
-Initialize game state variables:
+- **Define Variables**:
+  - `snake` (Array of coordinates)
 
-snake: Array of coordinate objects representing the snake's body.
+  - `food` (Coordinate object)
 
-food: Object containing x, y coordinates.
+  - `dx`, `dy` (Current direction)
 
-dx, dy: Current movement direction on the x and y axes.
+  - `nextDx`, `nextDy` (Queued direction to prevent reversing into self)
 
-nextDx, nextDy: Queued movement direction to prevent self-collision on rapid input.
+  - `score`, `speed`
 
-score: Current game score.
+  - State flags: `isPaused`, `isGameOver`
 
-gameLoop: Reference to the interval running the game.
+  - `activeThemes` (Object storing currently selected themes)
 
-speed: Current game speed (milliseconds per tick).
+- **Get DOM Elements**: Canvas context, buttons, modals (new player, game over, theme picker), input fields, audio elements.
 
-isPaused: Boolean tracking pause state.
+#
 
-isGameOver: Boolean tracking game over state.
+### 2. Event Listeners
 
-2. DOM Elements
+- **Keyboard Listener**:
+  - Prevent default scrolling for arrow keys.
 
-Cache references to HTML elements:
+  - If `Escape` pressed -> Toggle Pause.
 
-Canvas context (ctx).
+  - **If valid movement key pressed**:
+    - If `gameLoop` is inactive and not paused -> Start `gameLoop` interval.
 
-Buttons (restart, pause, submit).
+    - Start background music if not muted.
 
-Inputs (speed radio buttons, player name text input).
+    - Set `nextDx` and `nextDy` based on key pressed (ensuring it's not directly opposite to current direction).
 
-UI overlays (pause block, lose block, new player block).
+- **Click Listener (Global)**:
+  - **Route action based on button text/ID**:
+    - "**Restart/Play Again**": Reset game variables, close modals.
 
-Text displays (player name, score).
+    - "**Pause/Resume**": Toggle `isPaused` and `gameLoop` interval.
 
-3. Initialization
+    - "**Submit**": Validate name, close login modal, start game.
 
-window.onload: Call loadPlayerName() to check for a returning player in local storage.
+    - "**New Player**": Open login modal.
 
-newGame():
+    - "**Theme Picker**": Open theme modal.
 
-Reset game state variables (score, dx, dy, isPaused, isGameOver).
+    - "**Back**": Close theme modal.
 
-Clear any existing gameLoop.
+  - **If target is a theme image/button**:
+    - Extract theme name and body part from `alt` tag.
 
-Set the snake to a single random position on the grid.
+    - Update `activeThemes`.
 
-Generate initial food location.
+    - Update UI highlights.
 
-Clear the canvas.
+    - Redraw canvas if game is not over.
 
-Draw the initial snake and food.
+  - **Input Listeners (Radio/Checkboxes)**:
+    - Speed Radios: Update `speed` variable. Restart `gameLoop` with new interval if currently playing.
 
-4. Input Handling
+    - Mute Music Checkbox: Pause or Play `bgMusic` based on checked state.
 
-handleClicks(event):
+#
 
-If "restart" or "play again" is clicked, hide lose block and call newGame().
+### 3. Core Game Logic (`updateGame`)
 
-If "pause" or "resume" is clicked, call pauseResume().
+Update `dx` and `dy` with `nextDx` and `nextDy`.
 
-If "submit" is clicked, save the player's name and hide the new player overlay.
+Calculate new `head` position (`snake[0].x + dx`, `snake[0].y + dy`).
 
-handleKeyPress(event):
+**Collision Detection**:
 
-Prevent default scrolling for arrow keys and spacebar.
+Loop through `snake` array. If `head` matches any body part -> `gameOver()`.
 
-If "Escape" is pressed, call pauseResume().
+If `head` is out of canvas bounds (< 0 or > max grid) -> `gameOver()`.
 
-Ignore input if the game is paused.
+**Movement & Eating**:
 
-Check which movement key was pressed.
+Add new `head` to start of `snake` array (`unshift`).
 
-If a valid movement key is pressed (not opposite to current direction), update nextDx and nextDy.
+If head matches `food` coordinates:
 
-Start the gameLoop if it hasn't started yet.
+Increase `score`.
 
-handleInputs(event):
+Update Score UI.
 
-Listen for changes on speed radio buttons.
+Play `eatSfx` (if not muted).
 
-Update the speed variable based on the selected input (slow, med, fast).
+`generateFood()`.
 
-5. Core Game Loop (updateGame())
+**Else**:
 
-Update dx and dy with the values from nextDx and nextDy.
+Remove last element of `snake` array (`pop`) - creates movement effect.
 
-Calculate the new head position based on the current head position and movement direction.
+**Rendering**:
 
-Collision Detection:
+Clear canvas.
 
-Self-Collision: Check if the new head coordinates match any part of the snake array. If yes, call gameOver().
+`drawSnake()`.
 
-Wall Collision: Check if the new head coordinates are outside the grid boundaries. If yes, call gameOver().
+`drawFood()`.
 
-Movement & Eating:
+#
 
-Add the new head to the front of the snake array (unshift).
+### 4. Helper Functions
 
-Check if the new head coordinates match the food coordinates.
+`generateFood()`:
 
-If yes: Increase score, generate new food (generateFood()).
+Generate random X, Y within grid bounds.
 
-If no: Remove the tail segment of the snake (pop()).
+Check if X, Y overlap with any `snake` segment.
 
-Rendering:
+If overlapping, repeat generation until safe spot found.
 
-Clear the canvas.
+`drawSnake()`:
 
-Call drawSnake().
+Loop through `snake` array.
 
-Call drawFood().
+If index 0 (Head): Draw using selected Head theme (image or fallback color).
 
-6. Helper Functions
+Else (Body): Draw using selected Body theme (alternating colors or array of colors).
 
-savePlayerName(): Save name from input to localStorage, update UI greeting.
+`drawFood()`:
 
-loadPlayerName(): Retrieve name from localStorage on page load, update UI greeting if found.
+Draw food using selected Food theme (image or fallback color).
 
-pauseResume():
+`newGame()`:
 
-Toggle isPaused state.
+Reset `snake` to random starting position.
 
-If pausing: Clear gameLoop interval, show pause overlay.
+Reset scores, directions, flags.
 
-If resuming: Hide pause overlay, set gameLoop interval with current speed.
+Stop existing intervals.
 
-gameOver():
+Clear canvas, generate new food, draw initial state.
 
-Clear gameLoop interval.
+`gameOver()`:
 
-Set isGameOver to true.
+Set `isGameOver` to true.
 
-Show the lose block overlay.
+Clear interval.
 
-drawSnake(): Iterate through the snake array. Draw the head color for index 0, and alternate body colors for the rest.
+Play `loseSfx`. Pause music.
 
-generateFood(): Generate random x/y coordinates for food until the coordinates do not overlap with any segment of the snake.
+Save score to leaderboard.
 
-drawFood(): Draw a rectangle at the food coordinates.
+Show Game Over modal.
+
+`pauseResume()`:
+
+Toggle state.
+
+Stop/Start interval.
+
+Show/Hide Pause modal.
+
+Pause/Play music.
+
+**Leaderboard Functions**:
+
+Load/Save `cachedPlayerName` from `localStorage`.
+
+Retrieve `snakeLeaderboard` array from `localStorage`.
+
+Add new score object (name, score, speed).
+
+Sort array descending by score.
+
+Keep top 5 (`slice(0, 5)`).
+
+Save back to `localStorage`.
+
+Update DOM elements to display top scores.
+
+#
+
+### 5. Startup (`window.onload`)
+
+Check for existing player name in storage; if found, hide login modal.
+
+Populate leaderboard UI.
+
+Call `newGame()` to set up initial canvas state.

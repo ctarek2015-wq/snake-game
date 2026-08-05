@@ -1,3 +1,6 @@
+/* =========================================
+         === GLOBAL RESET & BASE STYLES ===
+         ========================================= */
 * {
   font-size: 16px;
   background: #f2e8cf;
@@ -10,11 +13,15 @@ body {
   width: 100vw;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: flex-start;
   margin: 0;
   padding: 0;
   overflow: hidden;
 }
+
+/* =========================================
+         === TYPOGRAPHY & BASIC ELEMENTS ===
+         ========================================= */
 h1 {
   font-size: 1.5rem;
   text-align: center;
@@ -25,6 +32,7 @@ legend {
 }
 label {
   background: #d6c7a0;
+  font-weight: 100;
 }
 button {
   font-size: 1.5rem;
@@ -47,27 +55,88 @@ fieldset {
   border: 1px solid black;
   font-weight: bold;
 }
-label {
-  font-weight: 100;
+
+/* =========================================
+         === HEADER BANNER & MENU ICON ===
+         ========================================= */
+.banner {
+  display: flex;
+  height: 8vh;
+  width: 100vw;
+  margin-bottom: 2px;
+  justify-content: space-between;
+  align-items: center;
+  background: #386641;
+  padding: 0 20px;
+  z-index: 500;
 }
+.burger-menu {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  padding: 5px;
+  z-index: 1001;
+}
+.burger-menu svg {
+  background: transparent;
+}
+.burger-menu rect {
+  transition: all 0.3s ease;
+}
+.banner h1 {
+  background: #386641;
+  font-size: 2rem;
+  color: #f2e8cf;
+  margin: 0;
+}
+.player-name,
+.score {
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 8px;
+  border-radius: 8px;
+  background: rgba(214, 199, 160, 0.15);
+  color: #f2e8cf;
+}
+
+/* =========================================
+         === MAIN LAYOUT & CONTROL PANEL ===
+         ========================================= */
 .game-board {
   display: flex;
-  justify-content: space-between;
-  padding: 0 2vw;
+  justify-content: center;
+  width: 100vw;
+  height: 92vh;
+  padding: 0;
+  position: relative;
 }
 
 .controls {
-  width: 28vw;
-  height: 88vh;
-  min-width: 200px;
+  position: fixed;
+  top: 8vh;
+  left: -100%;
+  width: 85vw;
+  max-width: 320px;
+  height: 92vh;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   background: #d6c7a0;
-  contain: content;
-  border-radius: 15px;
-  padding: 10px;
+  border-radius: 0 15px 15px 0;
+  padding: 15px;
+  box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
+  transition: left 0.3s ease-in-out;
+  z-index: 1000;
+  overflow-y: auto;
 }
+
+.controls.active {
+  left: 0;
+}
+
 .buttons {
   display: flex;
   justify-content: space-around;
@@ -87,11 +156,14 @@ label {
   border: 3px solid black;
 }
 
+/* =========================================
+         === GAME CANVAS & OVERLAYS ===
+         ========================================= */
 .game {
-  width: 68vw;
-  height: 88vh;
-  min-width: 400px;
+  width: 100%;
+  height: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   position: relative;
@@ -99,10 +171,10 @@ label {
 
 .grids {
   width: 80%;
-  min-width: 400px;
-  max-width: 750px;
+  min-width: 300px;
+  max-width: 600px;
   aspect-ratio: 1/1;
-  margin: auto;
+  margin: 0 auto;
   background-color: rgb(244, 244, 250);
   display: flex;
   border-radius: 5px;
@@ -119,11 +191,22 @@ label {
   align-items: center;
 }
 
+canvas {
+  background: #a7c957;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  border: solid 1px black;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
 .state-block {
   width: 100%;
   height: 100%;
   background-color: rgba(242, 232, 207, 0.9);
   position: absolute;
+  top: 0;
+  left: 0;
   display: none;
   flex-direction: column;
   justify-content: center;
@@ -133,8 +216,6 @@ label {
 }
 .state-block h2 {
   background: transparent;
-}
-h2 {
   font-size: 3rem;
   text-align: center;
 }
@@ -148,6 +229,9 @@ h2 {
   align-self: center;
 }
 
+/* =========================================
+         === LEADERBOARD ===
+         ========================================= */
 .leaderboard {
   display: flex;
   flex-direction: column;
@@ -203,30 +287,9 @@ h2 {
   background: #d6c7a0;
 }
 
-.banner {
-  display: flex;
-  height: 8vh;
-  width: 100vw;
-  margin-bottom: 2px;
-  justify-content: space-evenly;
-  align-items: center;
-  background: #386641;
-}
-.banner h1 {
-  background: #386641;
-  font-size: 2rem;
-  color: #f2e8cf;
-}
-.player-name,
-.score {
-  font-size: 1.5rem;
-  font-weight: bold;
-  padding: 8px;
-  border-radius: 8px;
-  background: #d6c7a025;
-  color: #f2e8cf;
-}
-
+/* =========================================
+         === MODAL WINDOWS (NEW PLAYER & THEME) ===
+         ========================================= */
 .new-player-class {
   width: 100vw;
   height: 100vh;
@@ -234,7 +297,7 @@ h2 {
   top: 0;
   left: 0;
   background: #87a575;
-  z-index: 100;
+  z-index: 10000;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -291,15 +354,6 @@ h2 {
   border: none;
 }
 
-canvas {
-  background: #a7c957;
-  width: 100%;
-  height: 100%;
-  border-radius: 10px;
-  border: solid 1px black;
-  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
-}
-
 .theme-window {
   width: 100vw;
   height: 100vh;
@@ -307,36 +361,38 @@ canvas {
   top: 0;
   left: 0;
   background: #87a575;
-  z-index: 100;
+  z-index: 5000;
   display: none;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  overflow-y: auto;
 }
 .theme-window h1 {
   font-size: 2.5rem;
   background: #87a575;
   color: #f2e8cf;
-  margin: 0;
+  margin: 20px 0 0 0;
 }
 .theme-window h3 {
   font-size: 1.5rem;
   background: #87a575;
   color: #f2e8cf;
-  margin: 0;
+  margin: 10px 0;
 }
 .sub {
   background: #87a575;
-  width: 75vw;
+  width: 90vw;
+  max-width: 800px;
   display: flex;
   justify-content: center;
 }
 .sub button {
   contain: content;
   width: 15vw;
-  height: 15vh;
-  max-width: 175px;
-  max-height: 200px;
+  height: 15vw;
+  max-width: 120px;
+  max-height: 120px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -347,38 +403,109 @@ canvas {
   background-color: #f2e8cf;
 }
 img {
-  width: 15vw;
-  height: 15vh;
-  max-width: 150px;
-  max-height: 150px;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: transparent;
 }
 #back {
   margin: 20px;
-  width: 10vw;
-  height: 5vh;
+  width: 150px;
+  height: 50px;
 }
-
 .theme-title {
-  contain: content;
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: border 0.3s;
-  background-color: #f2e8cf00;
-  width: 75vw;
+  background-color: transparent;
+  width: 90vw;
+  max-width: 800px;
 }
 .theme-title p {
-  width: 17vw;
-  max-width: 200px;
-  background-color: #f2e8cf00;
+  width: 15vw;
+  max-width: 140px;
+  background-color: transparent;
   color: #f2e8cf;
   text-align: center;
-  margin: 0;
+  margin: 0 10px;
   font-size: 1.25rem;
 }
-/* Active state for selected themes */
 .theme-selected {
   border: 5px solid #df0505 !important;
   background-color: #f2e8cf !important;
   box-shadow: 5px 5px 15px rgba(221, 7, 7, 0.897) !important;
+}
+
+/* =========================================
+         === MOBILE CONTROLS & MEDIA QUERIES ===
+         ========================================= */
+.mobile-controls {
+  display: none;
+  grid-template-columns: 60px 60px 60px;
+  grid-template-rows: 60px 60px;
+  gap: 15px;
+  margin-top: 30px;
+  justify-content: center;
+  background: transparent;
+}
+
+.d-btn {
+  background: #a7c957;
+  border: 2px solid #386641;
+  border-radius: 12px;
+  font-size: 28px;
+  color: #386641;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.d-btn:active {
+  background: #87a575;
+  transform: translateY(2px);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.d-up {
+  grid-column: 2;
+  grid-row: 1;
+}
+.d-left {
+  grid-column: 1;
+  grid-row: 2;
+}
+.d-down {
+  grid-column: 2;
+  grid-row: 2;
+}
+.d-right {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+@media (max-width: 768px) {
+  .mobile-controls {
+    display: grid;
+  }
+  .grids {
+    width: 95vw;
+    min-width: 280px;
+  }
+  .banner h1 {
+    display: none;
+  }
+  .player-name,
+  .score {
+    font-size: 1rem;
+    padding: 6px;
+  }
+  .new-player-class h1 {
+    font-size: 3.5rem;
+    text-align: center;
+  }
 }

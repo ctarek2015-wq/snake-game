@@ -9,12 +9,13 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <!-- NEW PLAYER MODAL -->
     <div class="new-player-class" id="new-player">
       <h1>SNAKE GAME</h1>
       <div class="instructions">
         <h3>Instructions</h3>
         <ul>
-          <li>Use arrows or (W,A,S,D) to move</li>
+          <li>Use arrows, WASD, or on-screen D-Pad</li>
           <li>Press Esc to pause the game</li>
         </ul>
       </div>
@@ -29,11 +30,11 @@
       </div>
     </div>
 
+    <!-- THEME PICKER MODAL -->
     <div class="theme-window">
       <h1>THEME PICKER</h1>
-      <div class="snake-body sub">
-        <h3>Snake Body:</h3>
-      </div>
+
+      <div class="snake-body sub"><h3>Snake Body:</h3></div>
       <div class="snake-body sub" id="theme-body-group">
         <button class="theme-selected">
           <img src="./assets/pic/snake-pics/basic-head.png" alt="basic-body" />
@@ -58,9 +59,7 @@
         <p>Carnival</p>
       </div>
 
-      <div class="snake-head sub">
-        <h3>Snake Head:</h3>
-      </div>
+      <div class="snake-head sub"><h3>Snake Head:</h3></div>
       <div class="snake-head sub" id="theme-head-group">
         <button class="theme-selected">
           <img src="./assets/pic/snake-pics/basic-head.png" alt="basic-head" />
@@ -85,9 +84,7 @@
         <p>Carnival</p>
       </div>
 
-      <div class="snake-food sub">
-        <h3>Snake Food:</h3>
-      </div>
+      <div class="snake-food sub"><h3>Snake Food:</h3></div>
       <div class="snake-food sub" id="theme-food-group">
         <button class="theme-selected">
           <img src="./assets/pic/snake-pics/basic-food.png" alt="basic-food" />
@@ -114,14 +111,23 @@
       <button id="back">Back</button>
     </div>
 
+    <!-- HEADER BANNER -->
     <header class="banner">
+      <button class="burger-menu" id="burger-menu">
+        <svg viewBox="0 0 100 80" width="30" height="30">
+          <rect width="100" height="15" rx="8" fill="#f2e8cf"></rect>
+          <rect y="32" width="100" height="15" rx="8" fill="#f2e8cf"></rect>
+          <rect y="64" width="100" height="15" rx="8" fill="#f2e8cf"></rect>
+        </svg>
+      </button>
       <h1>Snake Game</h1>
       <div class="player-name">Welcome!</div>
       <div class="score">Score: 0</div>
     </header>
 
     <div class="game-board">
-      <section class="controls">
+      <!-- CONTROL PANEL SIDEBAR -->
+      <section class="controls" id="controls-panel">
         <h1>CONTROL PANEL</h1>
         <button class="themes-btn">Theme Picker</button>
         <fieldset class="speed">
@@ -162,17 +168,27 @@
 
         <div class="buttons">
           <button class="restart">Restart</button>
-          <button class="pause">Pause</button>
+          <!-- Pause button removed as requested -->
         </div>
       </section>
 
+      <!-- GAME SECTION -->
       <section class="game">
         <div class="grids">
-          <div class="easy-grid">
+          <div id="easy-grid">
             <canvas id="easy-grid-canvas" width="400" height="400"></canvas>
           </div>
         </div>
 
+        <!-- Touch Controls for Mobile -->
+        <div class="mobile-controls">
+          <div class="d-btn d-up" id="btn-up">↑</div>
+          <div class="d-btn d-left" id="btn-left">←</div>
+          <div class="d-btn d-down" id="btn-down">↓</div>
+          <div class="d-btn d-right" id="btn-right">→</div>
+        </div>
+
+        <!-- STATE OVERLAYS -->
         <div class="state-block pause-block">
           <h2 class="pause-msg">GAME PAUSED</h2>
           <button class="resume">Resume</button>
