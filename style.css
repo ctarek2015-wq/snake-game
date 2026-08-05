@@ -317,11 +317,13 @@ canvas {
   font-size: 2.5rem;
   background: #87a575;
   color: #f2e8cf;
+  margin: 0;
 }
 .theme-window h3 {
   font-size: 1.5rem;
   background: #87a575;
   color: #f2e8cf;
+  margin: 0;
 }
 .sub {
   background: #87a575;
@@ -333,7 +335,7 @@ canvas {
   contain: content;
   width: 15vw;
   height: 15vh;
-  max-width: 200px;
+  max-width: 175px;
   max-height: 200px;
   display: flex;
   justify-content: center;
@@ -356,6 +358,24 @@ img {
   height: 5vh;
 }
 
+.theme-title {
+  contain: content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: border 0.3s;
+  background-color: #f2e8cf00;
+  width: 75vw;
+}
+.theme-title p {
+  width: 17vw;
+  max-width: 200px;
+  background-color: #f2e8cf00;
+  color: #f2e8cf;
+  text-align: center;
+  margin: 0;
+  font-size: 1.25rem;
+}
 /* Active state for selected themes */
 .theme-selected {
   border: 5px solid #df0505 !important;
