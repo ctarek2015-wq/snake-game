@@ -1,10 +1,48 @@
 ////////////////////////////////_____Constants_____////////////////////////
 const gridSize = 20;
 const canvaSize = 400;
-const snakeColorOne = "rgb(0, 121, 0)";
-const snakeColorTwo = "rgb(50, 158, 50)";
-const headColor = "rgb(8, 51, 8)";
-const foodColor = "red";
+const bodyColor = {
+  basic: {
+    snakeColorOne: "rgb(0, 121, 0)",
+    snakeColorTwo: "rgb(50, 158, 50)",
+  },
+  gold: {
+    snakeColorOne: "rgba(253, 209, 10, 0.89)",
+    snakeColorTwo: "rgba(211, 138, 4, 0.88)",
+  },
+  xmas: {
+    snakeColorOne: "rgb(240, 8, 8)",
+    snakeColorTwo: "rgba(240, 8, 8, 0.72)",
+  },
+  carnival: [
+    "rgb(250, 2, 2)",
+    "rgb(250, 114, 2)",
+    "rgb(250, 225, 2)",
+    "rgb(43, 250, 2)",
+    "rgb(2, 250, 238)",
+    "rgb(27, 2, 250)",
+    "rgb(250, 2, 250)",
+  ],
+};
+const headColor = {
+  basic: "rgb(8, 51, 8)",
+  gold: new Image(),
+  xmas: new Image(),
+  carnival: new Image(),
+};
+const foodColor = {
+  basic: new Image(),
+  gold: new Image(),
+  xmas: new Image(),
+  carnival: new Image(),
+};
+headColor.gold.src = "/assets/pic/snake-pics/gold-head.png";
+headColor.xmas.src = "/assets/pic/snake-pics/xmas-head.png";
+headColor.carnival.src = "/assets/pic/snake-pics/carnival-head.png";
+foodColor.basic.src = "/assets/pic/snake-pics/basic-food.png";
+foodColor.gold.src = "/assets/pic/snake-pics/gold-food.png";
+foodColor.xmas.src = "/assets/pic/snake-pics/xmas-food.png";
+foodColor.carnival.src = "/assets/pic/snake-pics/carnival-food.png";
 const up = ["w", "ArrowUp", "W"];
 const down = ["s", "ArrowDown", "S"];
 const left = ["a", "ArrowLeft", "A"];
@@ -84,6 +122,18 @@ const handleClicks = (event) => {
   if (btnFinder.includes("theme picker")) {
     themeWindowBlock.style.display = "flex";
   }
+
+  // Handle themes:
+  const find = event.target.alt;
+  for (btn of btns) {
+    if (find.includes("gold-body")) {
+      console.log("hi");
+      return;
+    } else {
+      console.log("no");
+    }
+  }
+  console.log(event.target.alt);
 };
 
 const handleKeyPress = (event) => {
@@ -266,12 +316,12 @@ const updateGame = () => {
 const drawSnake = () => {
   snake.forEach((part, idx) => {
     if (idx === 0) {
-      ctx.fillStyle = headColor;
+      ctx.fillStyle = headColor.gold;
     } else {
       if (idx % 2) {
-        ctx.fillStyle = snakeColorOne;
+        ctx.fillStyle = bodyColor.basic.snakeColorOne;
       } else {
-        ctx.fillStyle = snakeColorTwo;
+        ctx.fillStyle = bodyColor.basic.snakeColorTwo;
       }
     }
     // Draw slightly rounded rects for a nicer aesthetic
@@ -355,5 +405,5 @@ window.onload = () => {
   newGame();
 };
 // for (btn of btns) {
-//   console.dir(btn.innerHTML.includes("head"));
+//   console.dir(btn.classList);
 // }
