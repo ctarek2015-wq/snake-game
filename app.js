@@ -30,10 +30,13 @@ const ctx = canvas.getContext("2d");
 const inputs = document.querySelectorAll("input[type='radio']");
 const btns = document.querySelectorAll("button");
 const addNewPlayer = document.querySelector(".add-new-player");
+const themeBtn = document.querySelector(".themes-btn");
+const backBtn = document.getElementById("back");
 
 const pauseBlock = document.querySelector(".pause-block");
 const loseBlock = document.querySelector(".lose-block");
 const newPlayerBlock = document.getElementById("new-player");
+const themeWindowBlock = document.querySelector(".theme-window");
 
 const submitBtn = document.getElementById("submit");
 const playerNameInput = document.getElementById("player-name");
@@ -70,8 +73,16 @@ const handleClicks = (event) => {
   }
 
   // Handle new player button
-  if (event.target.innerText === "New Player") {
+  if (btnFinder.includes("new player")) {
     newPlayerBlock.style.display = "flex";
+  }
+
+  // Handle theme picker button and its back button
+  if (btnFinder.includes("back")) {
+    themeWindowBlock.style.display = "none";
+  }
+  if (btnFinder.includes("theme picker")) {
+    themeWindowBlock.style.display = "flex";
   }
 };
 
@@ -263,10 +274,16 @@ const drawSnake = () => {
         ctx.fillStyle = snakeColorTwo;
       }
     }
-    ctx.fillRect(part.x * gridSize, part.y * gridSize, gridSize, gridSize);
-    // Optional stroke for clarity
-    ctx.strokeStyle = "#f2e8cf";
-    ctx.strokeRect(part.x * gridSize, part.y * gridSize, gridSize, gridSize);
+    // Draw slightly rounded rects for a nicer aesthetic
+    ctx.beginPath();
+    ctx.roundRect(
+      part.x * gridSize + 1,
+      part.y * gridSize + 1,
+      gridSize - 2,
+      gridSize - 2,
+      4,
+    );
+    ctx.fill();
   });
 };
 
@@ -285,13 +302,15 @@ const generateFood = () => {
 
 const drawFood = () => {
   ctx.fillStyle = foodColor;
-  // Drawing food slightly smaller than grid for aesthetic
-  ctx.fillRect(
-    food.x * gridSize + 2,
-    food.y * gridSize + 2,
-    gridSize - 4,
-    gridSize - 4,
+  ctx.beginPath();
+  ctx.arc(
+    food.x * gridSize + gridSize / 2,
+    food.y * gridSize + gridSize / 2,
+    gridSize / 2 - 2,
+    0,
+    2 * Math.PI,
   );
+  ctx.fill();
 };
 
 const newGame = () => {
@@ -335,3 +354,6 @@ window.onload = () => {
   updateLeaderboardUI();
   newGame();
 };
+// for (btn of btns) {
+//   console.dir(btn.innerHTML.includes("head"));
+// }

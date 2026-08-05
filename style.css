@@ -32,12 +32,12 @@ button {
   width: 100px;
   cursor: pointer;
   border-radius: 5px;
-  border: 1px solid #333;
+  border: 1px solid rgba(21, 21, 197, 0);
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
 }
 button:hover {
   background-color: #e0d5ba;
-  transform: translateY(-2px);
+  transform: translateY(-2px) scale(1.1);
 }
 button:active {
   transform: translateY(0px);
@@ -75,10 +75,16 @@ label {
   flex-wrap: wrap;
   background: #d6c7a0;
 }
+.themes-btn {
+  width: 175px;
+  height: 50px;
+  align-self: center;
+  margin: 0 auto;
+}
 .controls h1 {
   background: #a7c957;
   padding: 12px;
-  border-radius: 5px;
+  border-radius: 10px;
   border: 3px solid black;
 }
 
@@ -237,7 +243,7 @@ h2 {
   left: 0;
   background: #87a575;
   z-index: 100;
-  display: flex; /* Will be toggled to 'none' in JS */
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -300,4 +306,53 @@ canvas {
   border-radius: 10px;
   border: solid 1px black;
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* ///////////////////// THEME WINDOW ///////////////////////////// */
+
+.theme-window {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #87a575;
+  z-index: 100;
+  /* display: none; */
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.theme-window h1 {
+  font-size: 2.5rem;
+  background: #87a575;
+  color: #f2e8cf;
+}
+.theme-window h3 {
+  font-size: 1.5rem;
+  background: #87a575;
+  color: #f2e8cf;
+}
+.sub {
+  background: #87a575;
+  width: 75vw;
+  display: flex;
+  justify-content: center;
+}
+.sub button {
+  contain: content;
+  width: 15vw;
+  height: 15vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+}
+img {
+  width: 10vw;
+}
+#back {
+  margin: 20px;
+  width: 10vw;
+  height: 5vh;
 }
