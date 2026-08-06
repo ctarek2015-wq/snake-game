@@ -2,6 +2,8 @@
 
 A feature-rich, web-based classic Snake game built with HTML5 Canvas, CSS, and JavaScript. It includes customizable themes, local storage leaderboards, and audio support.
 
+[PLAY NOW](https://ctarek2015-wq.github.io/snake-game/)
+
 ### **Features**
 
 - **Classic Gameplay**: Move with W, A, S, D or Arrow keys. Eat food to grow and increase your score. Avoid the walls and your own tail!
