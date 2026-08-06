@@ -226,6 +226,7 @@ const handleClicks = (event) => {
   if (btnFinder.includes("restart") || btnFinder.includes("play again")) {
     newGame();
     loseBlock.style.display = "none";
+    pauseBlock.style.display = "none";
     controlsPanel.classList.remove("active"); // Close panel if open
   }
 
