@@ -1,8 +1,36 @@
 # Not Ur Regular Snake Game 🐍
 
+![logo](./assets/pic/logo/snake-logo.png)
+
 A feature-rich, web-based classic Snake game built with HTML5 Canvas, CSS, and JavaScript. It includes customizable themes, local storage leaderboards, and audio support.
 
 [PLAY NOW](https://ctarek2015-wq.github.io/snake-game/)
+
+#
+
+![img](./assets/pic/screenshots/1.png)
+
+#
+
+![img](./assets/pic/screenshots/2.png)
+
+#
+
+![img](./assets/pic/screenshots/3.png)
+
+#
+
+![img](./assets/pic/screenshots/4.png)
+
+#
+
+![img](./assets/pic/screenshots/5.png)
+
+#
+
+![img](./assets/pic/screenshots/6.png)
+
+#
 
 ### **Features**
 
@@ -53,3 +81,37 @@ If you wish to use your own images or audio files, simply update the `src` attri
 1. **Audio**: Find the `<audio>` tags at the top of the `<body>` in `index.html` and change the `src` attribute within the `<source>` tags to your `.mp3` or `.wav` files.
 
 2. **Images**: Search for the `headColor`, `foodColor`, and the Theme Picker HTML section in the file, and replace the placeholder URLs (e.g., https://placehold.co/...) with paths to your local image assets (e.g., ./assets/my-head.png).
+
+### **Future Enhancements**
+
+> 🎵 Dynamic Audio System
+
+**Theme-Linked BGM:** Unique background music tracks that automatically switch to match your selected visual theme (e.g., 8-bit for Classic, upbeat for Carnival).
+
+**Custom SFX:** Distinct, high-quality sound effects for eating food, hitting walls, and UI interactions.
+
+**Adaptive Tempo:** Music speed dynamically scales with the selected game speed (Slow, Med, Fast).
+
+**Advanced Controls:** Independent toggles to mute SFX and Music, plus volume sliders for precise mixing.
+
+> 🍎 Special "Power-Up" Foods
+
+**Golden Apple**: Appears rarely, disappears after 5 seconds. Gives +50 points and slightly reduces the snake's length to keep you alive longer.
+
+**Poison Apple**: Looks slightly different. Eating it deducts points or temporarily reverses your controls!
+
+> 🧱 Dynamic Obstacles & Mazes
+
+Instead of an empty grid, we can add random brick walls that spawn when the game starts. As your score increases, more walls appear, turning the game into a maze.
+
+> 🌀 Portal Walls (Wrap-around)
+
+Instead of dying when you hit the edge of the screen, the snake teleports through the wall and comes out the opposite side! (This completely changes the strategy of the game).
+
+> 🏆 Level-Up System
+
+Instead of manually choosing the speed, the game automatically speeds up and the grid color shifts slightly every time you eat 5 apples, getting progressively harder.
+
+> 👯 Local Multiplayer (2 Players)
+
+Add a second snake! Player 1 uses W, A, S, D and Player 2 uses the Arrow Keys. First to crash into a wall or the other snake loses.
