@@ -185,17 +185,14 @@ const handleKeyPress = (event) => {
     gameLoop = setInterval(updateGame, speed);
   }
 
-  const direction = isUp
-    ? "up"
-    : isDown
-      ? "down"
-      : isLeft
-        ? "left"
-        : isRight
-          ? "right"
-          : null;
-  if (direction) {
-    setNextDirection(direction);
+  if (isUp) {
+    setNextDirection("up");
+  } else if (isDown) {
+    setNextDirection("down");
+  } else if (isLeft) {
+    setNextDirection("left");
+  } else if (isRight) {
+    setNextDirection("right");
   }
 };
 
