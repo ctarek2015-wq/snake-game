@@ -142,6 +142,22 @@ document.getElementById("btn-right").addEventListener("pointerdown", (e) => {
 });
 
 // Handle physical keyboard strokes
+const setNextDirection = (direction) => {
+  if (direction === "up" && dy !== 1) {
+    nextDx = 0;
+    nextDy = -1;
+  } else if (direction === "down" && dy !== -1) {
+    nextDx = 0;
+    nextDy = 1;
+  } else if (direction === "left" && dx !== 1) {
+    nextDx = -1;
+    nextDy = 0;
+  } else if (direction === "right" && dx !== -1) {
+    nextDx = 1;
+    nextDy = 0;
+  }
+};
+
 const handleKeyPress = (event) => {
   const key = event.key;
   if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " "].includes(key)) {
@@ -169,19 +185,8 @@ const handleKeyPress = (event) => {
     gameLoop = setInterval(updateGame, speed);
   }
 
-  if (isUp && dy !== 1) {
-    nextDx = 0;
-    nextDy = -1;
-  } else if (isDown && dy !== -1) {
-    nextDx = 0;
-    nextDy = 1;
-  } else if (isLeft && dx !== 1) {
-    nextDx = -1;
-    nextDy = 0;
-  } else if (isRight && dx !== -1) {
-    nextDx = 1;
-    nextDy = 0;
-  }
+  const direction = isUp ? "up" : isDown ? "down" : isLeft ? "left" : "right";
+  setNextDirection(direction);
 };
 
 // Handle on-screen D-Pad mapping
@@ -192,19 +197,7 @@ const handleDpadInput = (direction) => {
     gameLoop = setInterval(updateGame, speed);
   }
 
-  if (direction === "up" && dy !== 1) {
-    nextDx = 0;
-    nextDy = -1;
-  } else if (direction === "down" && dy !== -1) {
-    nextDx = 0;
-    nextDy = 1;
-  } else if (direction === "left" && dx !== 1) {
-    nextDx = -1;
-    nextDy = 0;
-  } else if (direction === "right" && dx !== -1) {
-    nextDx = 1;
-    nextDy = 0;
-  }
+  setNextDirection(direction);
 };
 
 // Handle UI configurations (Speed)
