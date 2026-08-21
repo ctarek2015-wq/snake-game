@@ -185,8 +185,18 @@ const handleKeyPress = (event) => {
     gameLoop = setInterval(updateGame, speed);
   }
 
-  const direction = isUp ? "up" : isDown ? "down" : isLeft ? "left" : "right";
-  setNextDirection(direction);
+  const direction = isUp
+    ? "up"
+    : isDown
+      ? "down"
+      : isLeft
+        ? "left"
+        : isRight
+          ? "right"
+          : null;
+  if (direction) {
+    setNextDirection(direction);
+  }
 };
 
 // Handle on-screen D-Pad mapping
