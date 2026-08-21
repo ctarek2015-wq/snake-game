@@ -237,6 +237,8 @@ const handleSubmitClick = () => {
     newPlayerBlock.style.display = "none";
     newGame();
     loseBlock.style.display = "none";
+    pauseBlock.style.display = "none";
+    controlsPanel.classList.remove("active");
   }
 };
 
