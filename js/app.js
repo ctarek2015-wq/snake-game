@@ -83,10 +83,11 @@ const canvas = document.getElementById("easy-grid-canvas");
 const ctx = canvas.getContext("2d");
 
 const inputs = document.querySelectorAll("input[type='radio']");
-const btns = document.querySelectorAll("button");
 const addNewPlayer = document.querySelector(".add-new-player");
 const themeBtn = document.querySelector(".themes-btn");
 const backBtn = document.getElementById("back");
+const restartBtns = document.querySelectorAll(".restart");
+const resumeBtn = document.querySelector(".resume");
 
 const pauseBlock = document.querySelector(".pause-block");
 const loseBlock = document.querySelector(".lose-block");
@@ -219,40 +220,39 @@ const handleInputs = (event) => {
   }
 };
 
-// Handle overarching generic clicks on buttons/images
-const handleClicks = (event) => {
-  const btnFinder = event.target.textContent.toLowerCase();
+const handleRestartClick = () => {
+  newGame();
+  loseBlock.style.display = "none";
+  pauseBlock.style.display = "none";
+  controlsPanel.classList.remove("active");
+};
 
-  if (btnFinder.includes("restart") || btnFinder.includes("play again")) {
+const handleResumeClick = () => {
+  pauseResume();
+};
+
+const handleSubmitClick = () => {
+  const isSaved = savePlayerName();
+  if (isSaved) {
+    newPlayerBlock.style.display = "none";
     newGame();
     loseBlock.style.display = "none";
-    pauseBlock.style.display = "none";
-    controlsPanel.classList.remove("active"); // Close panel if open
   }
+};
 
-  // "Resume" triggers pause toggle to close overlays and panel
-  if (btnFinder.includes("resume")) {
-    pauseResume();
-  }
-  if (event.target.id === "submit") {
-    const isSaved = savePlayerName();
-    if (isSaved) {
-      newPlayerBlock.style.display = "none";
-      newGame();
-      loseBlock.style.display = "none";
-    }
-  }
-  if (btnFinder.includes("new player")) {
-    newPlayerBlock.style.display = "flex";
-  }
-  if (btnFinder.includes("back") || event.target.id === "back") {
-    themeWindowBlock.style.display = "none";
-  }
-  if (btnFinder.includes("theme picker")) {
-    themeWindowBlock.style.display = "flex";
-  }
+const handleNewPlayerClick = () => {
+  newPlayerBlock.style.display = "flex";
+};
 
-  // Logic for Theme Selection
+const handleBackClick = () => {
+  themeWindowBlock.style.display = "none";
+};
+
+const handleThemePickerClick = () => {
+  themeWindowBlock.style.display = "flex";
+};
+
+const handleThemeSelection = (event) => {
   let targetImg = null;
   if (event.target.tagName === "IMG") {
     targetImg = event.target;
@@ -562,12 +562,13 @@ inputs.forEach((input) => {
   input.addEventListener("change", handleInputs);
 });
 document.addEventListener("keydown", handleKeyPress);
-btns.forEach((btn) => {
-  // filter out touch D-pad buttons from generic click handling
-  if (!btn.classList.contains("d-btn")) {
-    btn.addEventListener("click", handleClicks);
-  }
-});
+restartBtns.forEach((btn) => btn.addEventListener("click", handleRestartClick));
+resumeBtn.addEventListener("click", handleResumeClick);
+submitBtn.addEventListener("click", handleSubmitClick);
+addNewPlayer.addEventListener("click", handleNewPlayerClick);
+themeBtn.addEventListener("click", handleThemePickerClick);
+backBtn.addEventListener("click", handleBackClick);
+themeWindowBlock.addEventListener("click", handleThemeSelection);
 
 window.onload = () => {
   loadPlayerName();
